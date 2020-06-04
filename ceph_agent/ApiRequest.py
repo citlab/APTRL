@@ -1,17 +1,16 @@
 import requests as req
 import json
 
-cert_file = 'ceph-dashboard.crt'
-
 class ApiRequest:
 
 
-    def __init__(self, addr, port):
+    def __init__(self, addr, port, cert_file=False):
         self.addr = addr
-        self.port = port
+        self.port = str(port)
         self.header = {
             'Content-Type': 'application/json'
         }
+        self.cert_file = cert_file
 
     """
         get Auth token from dashboard login 
@@ -23,7 +22,7 @@ class ApiRequest:
         path = "/api/auth"
         url = "https://"+self.addr+':'+self.port+path
         payload = "{\"username\":\""+usr+"\", \"password\":\""+passd+"\"}"
-        r = req.post(url, verify=cert_file, headers=self.header, data=payload)
+        r = req.post(url, verify=self.cert_file, headers=self.header, data=payload)
 
         if(r.status_code == req.codes.created):
             token = r.json()['token']
@@ -41,7 +40,7 @@ class ApiRequest:
 
         path = "/docs/api.json"
         url = "https://"+self.addr+':'+self.port+path
-        r = req.get(url, verify=cert_file, headers=self.header)
+        r = req.get(url, verify=self.cert_file, headers=self.header)
 
         if(r.status_code == req.codes.ok):
             docs = r.json()
@@ -64,15 +63,15 @@ class ApiRequest:
         url = "https://"+self.addr+':'+self.port+path
         if(val == None):
             if(param == None):
-                r = req.get(url, verify=cert_file, headers=self.header)
+                r = req.get(url, verify=self.cert_file, headers=self.header)
             else:
-                r = req.get(url+"/"+param, verify=cert_file, headers=self.header)
+                r = req.get(url+"/"+param, verify=self.cert_file, headers=self.header)
         else:
             if(param == None or section == None):
                 raise Exception("No Parameter or Section name provided")
             payload = "{\"name\": \""+param+"\", \"value\": [{\"section\": \""+section+"\",\"value\": \""+val+"\"}]}"
             print(payload)
-            r = req.request('POST', url, verify=cert_file, 
+            r = req.request('POST', url, verify=self.cert_file, 
             headers=self.header, data=payload)
         if(r.status_code == req.codes.ok):
             config = r.json()
@@ -91,7 +90,7 @@ class ApiRequest:
 
         path='/api/health/'+report
         url = 'https://'+self.addr+':'+self.port+path
-        r = req.get(url, verify=cert_file, headers=self.header)
+        r = req.get(url, verify=self.cert_file, headers=self.header)
 
         if(r.status_code == req.codes.ok):
             health = r.json()
@@ -113,21 +112,10 @@ class ApiRequest:
             path='/api/perf_counters/'+section+'/'+sectionId
 
         url = 'https://'+self.addr+':'+self.port+path
-        r = req.get(url, verify=cert_file, headers=self.header)
+        r = req.get(url, verify=self.cert_file, headers=self.header)
 
         if(r.status_code == req.codes.ok):
             health = r.json()
             return health
         else:
             raise r.raise_for_status()
-
-
-a = ApiRequest("ceph-dashboard","41716")
-allPath = a.paths()
-# print(allPath)
-a.auth('admin', 'admin')
-a.clusterConfig(param='osd_recovery_sleep', val='0', section='global')
-#print(a.clusterConfig(param='osd_recovery_sleep'))
-
-#print(a.health(report='minimal'))
-print(a.performance('mon','a'))
