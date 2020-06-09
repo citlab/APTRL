@@ -1,0 +1,39 @@
+intf:
+  ControllerIntf.ControllerIntf_logfile : controller_log.log
+
+node:
+  node_id : 
+    - mon.a : 1
+    - mon.b : 2
+    - mon.c : 3
+    - client.a : 4
+    - client.b : 5
+    - client.c : 6
+    - client.d : 7
+  
+  server_node :
+    - mon.a
+    - mon.b
+    - mon.c
+
+  client_node :
+    - client.a
+    - client.b
+    - client.c
+    - client.d
+
+opt:
+  heartbeat : 5
+  dashboard_addr : ceph-dashboard
+  dashboard_port : 41422
+  auth: 
+    username : admin
+    passwd : admin
+
+ceph-param: 
+  - osd_memory_target
+  - osd_recovery_sleep
+  - rbd_cache 
+  - rbd_cache_size
+  - ms_tcp_prefetch_max_size
+  - ms_tcp_rcvbuf

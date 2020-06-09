@@ -10,13 +10,15 @@ import os
 import signal
 import sys
 import json
+import yaml
 
 __author__ = 'Puriwat Khantiviriya'
 
 
 def read_conf_file(conf_file):
     with open(conf_file, 'r') as confs:
-        conf = json.load(confs)
+        #conf = json.load(confs)
+        conf = yaml.load(confs, Loader=yaml.FullLoader)
         return conf
 
 def import_controller_intf(classname, opt, conf):

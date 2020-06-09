@@ -1,0 +1,40 @@
+"osd.op_r"
+"osd.op_w"
+"osd.op_rw"
+
+"osd.op_in_bytes"
+"osd.op_out_bytes"
+"osd.op"
+
+"objecter.op_r"
+"objecter.op_rmw"
+"objecter.op_w"
+
+"osd.op_r_out_bytes"
+"osd.op_w_in_bytes"
+"osd.op_rw_out_bytes"
+
+"objecter.op_r": {
+      "description": "Read operations",
+      "nick": "rd",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 0
+    },
+    "objecter.op_rmw": {
+      "description": "Read-modify-write operations",
+      "nick": "rdwr",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "objecter.op_w": {
+      "description": "Write operations",
+      "nick": "wr",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 0
+    },

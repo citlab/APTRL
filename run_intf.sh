@@ -41,4 +41,4 @@ EOF
     exit 2
 fi
 
-`dirname $0`/_run_service.sh interface.ControllerIntf.ControllerInft "$@"
+`dirname $0`/_run_service.sh ControllerIntf.ControllerInft "$@"

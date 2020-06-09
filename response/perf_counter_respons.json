@@ -1,0 +1,5878 @@
+{
+  "mds.c": {
+    "mds.caps": {
+      "description": "Capabilities",
+      "nick": "caps",
+      "type": 2,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mds.dir_commit": {
+      "description": "Directory commit",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 12
+    },
+    "mds.dir_fetch": {
+      "description": "Directory fetch",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds.dir_merge": {
+      "description": "Directory merge",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds.dir_split": {
+      "description": "Directory split",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds.exported_inodes": {
+      "description": "Exported inodes",
+      "nick": "exi",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mds.forward": {
+      "description": "Forwarding request",
+      "nick": "fwd",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mds.imported_inodes": {
+      "description": "Imported inodes",
+      "nick": "imi",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mds.inodes": {
+      "description": "Inodes",
+      "nick": "inos",
+      "type": 2,
+      "priority": 10,
+      "units": 1,
+      "value": 10
+    },
+    "mds.inodes_expired": {
+      "description": "Inodes expired",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds.inodes_pinned": {
+      "description": "Inodes pinned",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 10
+    },
+    "mds.inodes_with_caps": {
+      "description": "Inodes with capabilities",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds.load_cent": {
+      "description": "Load per cent",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds.openino_dir_fetch": {
+      "description": "OpenIno incomplete directory fetchings",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds.reply_latency": {
+      "description": "Reply latency",
+      "nick": "rlat",
+      "type": 5,
+      "priority": 10,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds.request": {
+      "description": "Requests",
+      "nick": "req",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 0
+    },
+    "mds.root_rbytes": {
+      "description": "root inode rbytes",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds.root_rfiles": {
+      "description": "root inode rfiles",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds.root_rsnaps": {
+      "description": "root inode rsnaps",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds.subtrees": {
+      "description": "Subtrees",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 2
+    },
+    "mds_cache.ireq_enqueue_scrub": {
+      "description": "Internal Request type enqueue scrub",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.ireq_exportdir": {
+      "description": "Internal Request type export dir",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.ireq_flush": {
+      "description": "Internal Request type flush",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.ireq_fragmentdir": {
+      "description": "Internal Request type fragmentdir",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.ireq_fragstats": {
+      "description": "Internal Request type frag stats",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.ireq_inodestats": {
+      "description": "Internal Request type inode stats",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.num_recovering_enqueued": {
+      "description": "Files waiting for recovery",
+      "nick": "recy",
+      "type": 2,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.num_recovering_prioritized": {
+      "description": "Files waiting for recovery with elevated priority",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.num_recovering_processing": {
+      "description": "Files currently being recovered",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.num_strays": {
+      "description": "Stray dentries",
+      "nick": "stry",
+      "type": 2,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.num_strays_delayed": {
+      "description": "Stray dentries delayed",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.num_strays_enqueuing": {
+      "description": "Stray dentries enqueuing for purge",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.recovery_completed": {
+      "description": "File recoveries completed",
+      "nick": "recd",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.recovery_started": {
+      "description": "File recoveries started",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.strays_created": {
+      "description": "Stray dentries created",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.strays_enqueued": {
+      "description": "Stray dentries enqueued for purge",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.strays_migrated": {
+      "description": "Stray dentries migrated",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_cache.strays_reintegrated": {
+      "description": "Stray dentries reintegrated",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_log.ev": {
+      "description": "Events",
+      "nick": "evts",
+      "type": 2,
+      "priority": 8,
+      "units": 1,
+      "value": 1
+    },
+    "mds_log.evadd": {
+      "description": "Events submitted",
+      "nick": "subm",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 1
+    },
+    "mds_log.evex": {
+      "description": "Total expired events",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_log.evexd": {
+      "description": "Current expired events",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_log.evexg": {
+      "description": "Expiring events",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_log.evtrm": {
+      "description": "Trimmed events",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_log.jlat": {
+      "description": "Journaler flush latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 8847724,
+      "count": 1
+    },
+    "mds_log.replayed": {
+      "description": "Events replayed",
+      "nick": "repl",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mds_log.seg": {
+      "description": "Segments",
+      "nick": "segs",
+      "type": 2,
+      "priority": 8,
+      "units": 1,
+      "value": 1
+    },
+    "mds_log.segadd": {
+      "description": "Segments added",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 1
+    },
+    "mds_log.segex": {
+      "description": "Total expired segments",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_log.segexd": {
+      "description": "Current expired segments",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_log.segexg": {
+      "description": "Expiring segments",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_log.segtrm": {
+      "description": "Trimmed segments",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_mem.cap": {
+      "description": "Capabilities",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_mem.cap+": {
+      "description": "Capabilities added",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_mem.cap-": {
+      "description": "Capabilities removed",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_mem.dir": {
+      "description": "Directories",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 12
+    },
+    "mds_mem.dir+": {
+      "description": "Directories opened",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 12
+    },
+    "mds_mem.dir-": {
+      "description": "Directories closed",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_mem.dn": {
+      "description": "Dentries",
+      "nick": "dn",
+      "type": 2,
+      "priority": 8,
+      "units": 1,
+      "value": 10
+    },
+    "mds_mem.dn+": {
+      "description": "Dentries opened",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 10
+    },
+    "mds_mem.dn-": {
+      "description": "Dentries closed",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_mem.heap": {
+      "description": "Heap size",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 315552
+    },
+    "mds_mem.ino": {
+      "description": "Inodes",
+      "nick": "ino",
+      "type": 2,
+      "priority": 8,
+      "units": 1,
+      "value": 13
+    },
+    "mds_mem.ino+": {
+      "description": "Inodes opened",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 13
+    },
+    "mds_mem.ino-": {
+      "description": "Inodes closed",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_server.cap_revoke_eviction": {
+      "description": "Cap Revoke Client Eviction",
+      "nick": "cre",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mds_server.handle_client_request": {
+      "description": "Client requests",
+      "nick": "hcr",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mds_server.handle_client_session": {
+      "description": "Client session messages",
+      "nick": "hcs",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mds_server.handle_slave_request": {
+      "description": "Slave requests",
+      "nick": "hsr",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mds_server.req_create_latency": {
+      "description": "Request type create latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_getattr_latency": {
+      "description": "Request type get attribute latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_getfilelock_latency": {
+      "description": "Request type get file lock latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_link_latency": {
+      "description": "Request type link latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_lookup_latency": {
+      "description": "Request type lookup latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_lookuphash_latency": {
+      "description": "Request type lookup hash of inode latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_lookupino_latency": {
+      "description": "Request type lookup inode latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_lookupname_latency": {
+      "description": "Request type lookup name latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_lookupparent_latency": {
+      "description": "Request type lookup parent latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_lookupsnap_latency": {
+      "description": "Request type lookup snapshot latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_lssnap_latency": {
+      "description": "Request type list snapshot latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_mkdir_latency": {
+      "description": "Request type make directory latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_mknod_latency": {
+      "description": "Request type make node latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_mksnap_latency": {
+      "description": "Request type make snapshot latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_open_latency": {
+      "description": "Request type open latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_readdir_latency": {
+      "description": "Request type read directory latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_rename_latency": {
+      "description": "Request type rename latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_renamesnap_latency": {
+      "description": "Request type rename snapshot latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_rmdir_latency": {
+      "description": "Request type remove directory latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_rmsnap_latency": {
+      "description": "Request type remove snapshot latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_rmxattr_latency": {
+      "description": "Request type remove extended attribute latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_setattr_latency": {
+      "description": "Request type set attribute latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_setdirlayout_latency": {
+      "description": "Request type set directory layout latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_setfilelock_latency": {
+      "description": "Request type set file lock latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_setlayout_latency": {
+      "description": "Request type set file layout latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_setxattr_latency": {
+      "description": "Request type set extended attribute latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_symlink_latency": {
+      "description": "Request type symbolic link latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_server.req_unlink_latency": {
+      "description": "Request type unlink latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "mds_sessions.average_load": {
+      "description": "Average Load",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_sessions.avg_session_uptime": {
+      "description": "Average session uptime",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_sessions.session_add": {
+      "description": "Sessions added",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_sessions.session_count": {
+      "description": "Session count",
+      "nick": "sess",
+      "type": 2,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mds_sessions.session_remove": {
+      "description": "Sessions removed",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_sessions.sessions_open": {
+      "description": "Sessions currently open",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_sessions.sessions_stale": {
+      "description": "Sessions currently stale",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "mds_sessions.total_load": {
+      "description": "Total Load",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "objecter.op_active": {
+      "description": "Operations active",
+      "nick": "actv",
+      "type": 2,
+      "priority": 10,
+      "units": 1,
+      "value": 0
+    },
+    "objecter.op_r": {
+      "description": "Read operations",
+      "nick": "rd",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 0
+    },
+    "objecter.op_rmw": {
+      "description": "Read-modify-write operations",
+      "nick": "rdwr",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "objecter.op_w": {
+      "description": "Write operations",
+      "nick": "wr",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 39
+    },
+    "purge_queue.pq_executed": {
+      "description": "Purge queue tasks executed",
+      "nick": "purg",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "purge_queue.pq_executing": {
+      "description": "Purge queue tasks in flight",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "purge_queue.pq_executing_high_water": {
+      "description": "Maximum number of executing file purges",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "purge_queue.pq_executing_ops": {
+      "description": "Purge queue ops in flight",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "purge_queue.pq_executing_ops_high_water": {
+      "description": "Maximum number of executing file purge ops",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "purge_queue.pq_item_in_journal": {
+      "description": "Purge item left in journal",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    }
+  },
+  "mon.a": {
+    "mon.election_call": {
+      "description": "Elections started",
+      "nick": "estt",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 2
+    },
+    "mon.election_lose": {
+      "description": "Elections lost",
+      "nick": "elst",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mon.election_win": {
+      "description": "Elections won",
+      "nick": "ewon",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 2
+    },
+    "mon.num_elections": {
+      "description": "Elections participated in",
+      "nick": "ecnt",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 5
+    },
+    "mon.num_sessions": {
+      "description": "Open sessions",
+      "nick": "sess",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 6
+    },
+    "mon.session_add": {
+      "description": "Created sessions",
+      "nick": "sadd",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 3
+    },
+    "mon.session_rm": {
+      "description": "Removed sessions",
+      "nick": "srm",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 21
+    },
+    "mon.session_trim": {
+      "description": "Trimmed sessions",
+      "nick": "strm",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.accept_timeout": {
+      "description": "Accept timeouts",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.begin": {
+      "description": "Started and handled begins",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2464
+    },
+    "paxos.begin_bytes": {
+      "description": "Data in transaction on begin",
+      "type": 6,
+      "priority": 5,
+      "units": 0,
+      "value": 29652900,
+      "count": 2464
+    },
+    "paxos.begin_keys": {
+      "description": "Keys in transaction on begin",
+      "type": 6,
+      "priority": 5,
+      "units": 1,
+      "value": 7392,
+      "count": 2464
+    },
+    "paxos.begin_latency": {
+      "description": "Latency of begin operation",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 9923999595,
+      "count": 2464
+    },
+    "paxos.collect": {
+      "description": "Peon collects",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.collect_bytes": {
+      "description": "Data in transaction on peon collect",
+      "type": 6,
+      "priority": 5,
+      "units": 0,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.collect_keys": {
+      "description": "Keys in transaction on peon collect",
+      "type": 6,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.collect_latency": {
+      "description": "Peon collect latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.collect_timeout": {
+      "description": "Collect timeouts",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.collect_uncommitted": {
+      "description": "Uncommitted values in started and handled collects",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.commit": {
+      "description": "Commits",
+      "nick": "cmt",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2464
+    },
+    "paxos.commit_bytes": {
+      "description": "Data in transaction on commit",
+      "type": 6,
+      "priority": 5,
+      "units": 0,
+      "value": 29473528,
+      "count": 2464
+    },
+    "paxos.commit_keys": {
+      "description": "Keys in transaction on commit",
+      "type": 6,
+      "priority": 5,
+      "units": 1,
+      "value": 15353,
+      "count": 2464
+    },
+    "paxos.commit_latency": {
+      "description": "Commit latency",
+      "nick": "clat",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 5785844217,
+      "count": 2464
+    },
+    "paxos.lease_ack_timeout": {
+      "description": "Lease acknowledgement timeouts",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.lease_timeout": {
+      "description": "Lease timeouts",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.new_pn": {
+      "description": "New proposal number queries",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2
+    },
+    "paxos.new_pn_latency": {
+      "description": "New proposal number getting latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 4000000,
+      "count": 2
+    },
+    "paxos.refresh": {
+      "description": "Refreshes",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2466
+    },
+    "paxos.refresh_latency": {
+      "description": "Refresh latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 48963997899,
+      "count": 2466
+    },
+    "paxos.restart": {
+      "description": "Restarts",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 7
+    },
+    "paxos.share_state": {
+      "description": "Sharings of state",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.share_state_bytes": {
+      "description": "Data in shared state",
+      "type": 6,
+      "priority": 5,
+      "units": 0,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.share_state_keys": {
+      "description": "Keys in shared state",
+      "type": 6,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.start_leader": {
+      "description": "Starts in leader role",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2
+    },
+    "paxos.start_peon": {
+      "description": "Starts in peon role",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.store_state": {
+      "description": "Store a shared state on disk",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.store_state_bytes": {
+      "description": "Data in transaction in stored state",
+      "type": 6,
+      "priority": 5,
+      "units": 0,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.store_state_keys": {
+      "description": "Keys in transaction in stored state",
+      "type": 6,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.store_state_latency": {
+      "description": "Storing state latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "prioritycache.cache_bytes": {
+      "description": "current memory available for caches.",
+      "nick": "c",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 1020054731
+    },
+    "prioritycache.heap_bytes": {
+      "description": "aggregate bytes in use by the heap",
+      "nick": "h",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 92758016
+    },
+    "prioritycache.mapped_bytes": {
+      "description": "total bytes mapped by the process",
+      "nick": "m",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 91324416
+    },
+    "prioritycache.target_bytes": {
+      "description": "target process memory usage in bytes",
+      "nick": "t",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 2147483648
+    },
+    "prioritycache.unmapped_bytes": {
+      "description": "unmapped bytes that the kernel has yet to reclaimed",
+      "nick": "u",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 1433600
+    },
+    "prioritycache:full.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 360710144
+    },
+    "prioritycache:full.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 292507773
+    },
+    "prioritycache:full.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 55156
+    },
+    "prioritycache:full.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 68147215
+    },
+    "prioritycache:inc.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 360710144
+    },
+    "prioritycache:inc.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 292507773
+    },
+    "prioritycache:inc.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 14909
+    },
+    "prioritycache:inc.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 68187462
+    },
+    "prioritycache:kv.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 289406976
+    },
+    "prioritycache:kv.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 55616
+    },
+    "prioritycache:kv.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 195005182
+    },
+    "prioritycache:kv.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 25998816
+    },
+    "prioritycache:kv.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 68347362
+    },
+    "rocksdb.compact": {
+      "description": "Compactions",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "rocksdb.compact_queue_len": {
+      "description": "Length of compaction queue",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "rocksdb.compact_queue_merge": {
+      "description": "Mergings of ranges in compaction queue",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "rocksdb.compact_range": {
+      "description": "Compactions by range",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 17
+    },
+    "rocksdb.get": {
+      "description": "Gets",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 98447
+    },
+    "rocksdb.get_latency": {
+      "description": "Get latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 4507755235,
+      "count": 98447
+    },
+    "rocksdb.rocksdb_write_delay_time": {
+      "description": "Rocksdb write delay time",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "rocksdb.rocksdb_write_memtable_time": {
+      "description": "Rocksdb write memtable time",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "rocksdb.rocksdb_write_pre_and_post_time": {
+      "description": "total time spent on writing a record, excluding write process",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "rocksdb.rocksdb_write_wal_time": {
+      "description": "Rocksdb write wal time",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "rocksdb.submit_latency": {
+      "description": "Submit Latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "rocksdb.submit_sync_latency": {
+      "description": "Submit Sync Latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 15791488107,
+      "count": 4964
+    },
+    "rocksdb.submit_transaction": {
+      "description": "Submit transactions",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "rocksdb.submit_transaction_sync": {
+      "description": "Submit transactions sync",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 4964
+    }
+  },
+  "mon.b": {
+    "mon.election_call": {
+      "description": "Elections started",
+      "nick": "estt",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 2
+    },
+    "mon.election_lose": {
+      "description": "Elections lost",
+      "nick": "elst",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 2
+    },
+    "mon.election_win": {
+      "description": "Elections won",
+      "nick": "ewon",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mon.num_elections": {
+      "description": "Elections participated in",
+      "nick": "ecnt",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 5
+    },
+    "mon.num_sessions": {
+      "description": "Open sessions",
+      "nick": "sess",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 8
+    },
+    "mon.session_add": {
+      "description": "Created sessions",
+      "nick": "sadd",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 3
+    },
+    "mon.session_rm": {
+      "description": "Removed sessions",
+      "nick": "srm",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 26
+    },
+    "mon.session_trim": {
+      "description": "Trimmed sessions",
+      "nick": "strm",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.accept_timeout": {
+      "description": "Accept timeouts",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.begin": {
+      "description": "Started and handled begins",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2464
+    },
+    "paxos.begin_bytes": {
+      "description": "Data in transaction on begin",
+      "type": 6,
+      "priority": 5,
+      "units": 0,
+      "value": 29652900,
+      "count": 2464
+    },
+    "paxos.begin_keys": {
+      "description": "Keys in transaction on begin",
+      "type": 6,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.begin_latency": {
+      "description": "Latency of begin operation",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 6215999754,
+      "count": 2464
+    },
+    "paxos.collect": {
+      "description": "Peon collects",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2
+    },
+    "paxos.collect_bytes": {
+      "description": "Data in transaction on peon collect",
+      "type": 6,
+      "priority": 5,
+      "units": 0,
+      "value": 146,
+      "count": 2
+    },
+    "paxos.collect_keys": {
+      "description": "Keys in transaction on peon collect",
+      "type": 6,
+      "priority": 5,
+      "units": 1,
+      "value": 2,
+      "count": 2
+    },
+    "paxos.collect_latency": {
+      "description": "Peon collect latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 4000000,
+      "count": 2
+    },
+    "paxos.collect_timeout": {
+      "description": "Collect timeouts",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.collect_uncommitted": {
+      "description": "Uncommitted values in started and handled collects",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.commit": {
+      "description": "Commits",
+      "nick": "cmt",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2464
+    },
+    "paxos.commit_bytes": {
+      "description": "Data in transaction on commit",
+      "type": 6,
+      "priority": 5,
+      "units": 0,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.commit_keys": {
+      "description": "Keys in transaction on commit",
+      "type": 6,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.commit_latency": {
+      "description": "Commit latency",
+      "nick": "clat",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.lease_ack_timeout": {
+      "description": "Lease acknowledgement timeouts",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.lease_timeout": {
+      "description": "Lease timeouts",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.new_pn": {
+      "description": "New proposal number queries",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.new_pn_latency": {
+      "description": "New proposal number getting latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.refresh": {
+      "description": "Refreshes",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2464
+    },
+    "paxos.refresh_latency": {
+      "description": "Refresh latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 43743998121,
+      "count": 2464
+    },
+    "paxos.restart": {
+      "description": "Restarts",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 7
+    },
+    "paxos.share_state": {
+      "description": "Sharings of state",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.share_state_bytes": {
+      "description": "Data in shared state",
+      "type": 6,
+      "priority": 5,
+      "units": 0,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.share_state_keys": {
+      "description": "Keys in shared state",
+      "type": 6,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.start_leader": {
+      "description": "Starts in leader role",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.start_peon": {
+      "description": "Starts in peon role",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2
+    },
+    "paxos.store_state": {
+      "description": "Store a shared state on disk",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2464
+    },
+    "paxos.store_state_bytes": {
+      "description": "Data in transaction in stored state",
+      "type": 6,
+      "priority": 5,
+      "units": 0,
+      "value": 58838140,
+      "count": 2464
+    },
+    "paxos.store_state_keys": {
+      "description": "Keys in transaction in stored state",
+      "type": 6,
+      "priority": 5,
+      "units": 1,
+      "value": 17817,
+      "count": 2464
+    },
+    "paxos.store_state_latency": {
+      "description": "Storing state latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 5927999718,
+      "count": 2464
+    },
+    "prioritycache.cache_bytes": {
+      "description": "current memory available for caches.",
+      "nick": "c",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 1011583077
+    },
+    "prioritycache.heap_bytes": {
+      "description": "aggregate bytes in use by the heap",
+      "nick": "h",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 21381120
+    },
+    "prioritycache.mapped_bytes": {
+      "description": "total bytes mapped by the process",
+      "nick": "m",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 20537344
+    },
+    "prioritycache.target_bytes": {
+      "description": "target process memory usage in bytes",
+      "nick": "t",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 2147483648
+    },
+    "prioritycache.unmapped_bytes": {
+      "description": "unmapped bytes that the kernel has yet to reclaimed",
+      "nick": "u",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 843776
+    },
+    "prioritycache:full.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "rocksdb.compact": {
+      "description": "Compactions",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "rocksdb.compact_queue_len": {
+      "description": "Length of compaction queue",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "rocksdb.compact_queue_merge": {
+      "description": "Mergings of ranges in compaction queue",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "rocksdb.compact_range": {
+      "description": "Compactions by range",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 17
+    },
+    "rocksdb.get": {
+      "description": "Gets",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 95904
+    },
+    "rocksdb.get_latency": {
+      "description": "Get latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 3453892371,
+      "count": 95904
+    },
+    "rocksdb.rocksdb_write_delay_time": {
+      "description": "Rocksdb write delay time",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "rocksdb.rocksdb_write_memtable_time": {
+      "description": "Rocksdb write memtable time",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "rocksdb.rocksdb_write_pre_and_post_time": {
+      "description": "total time spent on writing a record, excluding write process",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "rocksdb.rocksdb_write_wal_time": {
+      "description": "Rocksdb write wal time",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "rocksdb.submit_latency": {
+      "description": "Submit Latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "rocksdb.submit_sync_latency": {
+      "description": "Submit Sync Latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 11991931867,
+      "count": 4964
+    },
+    "rocksdb.submit_transaction": {
+      "description": "Submit transactions",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "rocksdb.submit_transaction_sync": {
+      "description": "Submit transactions sync",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 4964
+    }
+  },
+  "mon.c": {
+    "mon.election_call": {
+      "description": "Elections started",
+      "nick": "estt",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 2
+    },
+    "mon.election_lose": {
+      "description": "Elections lost",
+      "nick": "elst",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 2
+    },
+    "mon.election_win": {
+      "description": "Elections won",
+      "nick": "ewon",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "mon.num_elections": {
+      "description": "Elections participated in",
+      "nick": "ecnt",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 5
+    },
+    "mon.num_sessions": {
+      "description": "Open sessions",
+      "nick": "sess",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 5
+    },
+    "mon.session_add": {
+      "description": "Created sessions",
+      "nick": "sadd",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 3
+    },
+    "mon.session_rm": {
+      "description": "Removed sessions",
+      "nick": "srm",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 22
+    },
+    "mon.session_trim": {
+      "description": "Trimmed sessions",
+      "nick": "strm",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.accept_timeout": {
+      "description": "Accept timeouts",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.begin": {
+      "description": "Started and handled begins",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2464
+    },
+    "paxos.begin_bytes": {
+      "description": "Data in transaction on begin",
+      "type": 6,
+      "priority": 5,
+      "units": 0,
+      "value": 29652900,
+      "count": 2464
+    },
+    "paxos.begin_keys": {
+      "description": "Keys in transaction on begin",
+      "type": 6,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.begin_latency": {
+      "description": "Latency of begin operation",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 6323999749,
+      "count": 2464
+    },
+    "paxos.collect": {
+      "description": "Peon collects",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2
+    },
+    "paxos.collect_bytes": {
+      "description": "Data in transaction on peon collect",
+      "type": 6,
+      "priority": 5,
+      "units": 0,
+      "value": 146,
+      "count": 2
+    },
+    "paxos.collect_keys": {
+      "description": "Keys in transaction on peon collect",
+      "type": 6,
+      "priority": 5,
+      "units": 1,
+      "value": 2,
+      "count": 2
+    },
+    "paxos.collect_latency": {
+      "description": "Peon collect latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 4000000,
+      "count": 2
+    },
+    "paxos.collect_timeout": {
+      "description": "Collect timeouts",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.collect_uncommitted": {
+      "description": "Uncommitted values in started and handled collects",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.commit": {
+      "description": "Commits",
+      "nick": "cmt",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2464
+    },
+    "paxos.commit_bytes": {
+      "description": "Data in transaction on commit",
+      "type": 6,
+      "priority": 5,
+      "units": 0,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.commit_keys": {
+      "description": "Keys in transaction on commit",
+      "type": 6,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.commit_latency": {
+      "description": "Commit latency",
+      "nick": "clat",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.lease_ack_timeout": {
+      "description": "Lease acknowledgement timeouts",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.lease_timeout": {
+      "description": "Lease timeouts",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.new_pn": {
+      "description": "New proposal number queries",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.new_pn_latency": {
+      "description": "New proposal number getting latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.refresh": {
+      "description": "Refreshes",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2464
+    },
+    "paxos.refresh_latency": {
+      "description": "Refresh latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 43511998130,
+      "count": 2464
+    },
+    "paxos.restart": {
+      "description": "Restarts",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 7
+    },
+    "paxos.share_state": {
+      "description": "Sharings of state",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.share_state_bytes": {
+      "description": "Data in shared state",
+      "type": 6,
+      "priority": 5,
+      "units": 0,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.share_state_keys": {
+      "description": "Keys in shared state",
+      "type": 6,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "paxos.start_leader": {
+      "description": "Starts in leader role",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "paxos.start_peon": {
+      "description": "Starts in peon role",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2
+    },
+    "paxos.store_state": {
+      "description": "Store a shared state on disk",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 2464
+    },
+    "paxos.store_state_bytes": {
+      "description": "Data in transaction in stored state",
+      "type": 6,
+      "priority": 5,
+      "units": 0,
+      "value": 58838140,
+      "count": 2464
+    },
+    "paxos.store_state_keys": {
+      "description": "Keys in transaction in stored state",
+      "type": 6,
+      "priority": 5,
+      "units": 1,
+      "value": 17817,
+      "count": 2464
+    },
+    "paxos.store_state_latency": {
+      "description": "Storing state latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 6503999699,
+      "count": 2464
+    },
+    "prioritycache.cache_bytes": {
+      "description": "current memory available for caches.",
+      "nick": "c",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 1011593215
+    },
+    "prioritycache.heap_bytes": {
+      "description": "aggregate bytes in use by the heap",
+      "nick": "h",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 21381120
+    },
+    "prioritycache.mapped_bytes": {
+      "description": "total bytes mapped by the process",
+      "nick": "m",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 20512768
+    },
+    "prioritycache.target_bytes": {
+      "description": "target process memory usage in bytes",
+      "nick": "t",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 2147483648
+    },
+    "prioritycache.unmapped_bytes": {
+      "description": "unmapped bytes that the kernel has yet to reclaimed",
+      "nick": "u",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 868352
+    },
+    "prioritycache:full.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:full.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:inc.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "rocksdb.compact": {
+      "description": "Compactions",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "rocksdb.compact_queue_len": {
+      "description": "Length of compaction queue",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "rocksdb.compact_queue_merge": {
+      "description": "Mergings of ranges in compaction queue",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "rocksdb.compact_range": {
+      "description": "Compactions by range",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 17
+    },
+    "rocksdb.get": {
+      "description": "Gets",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 95904
+    },
+    "rocksdb.get_latency": {
+      "description": "Get latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 3456476446,
+      "count": 95904
+    },
+    "rocksdb.rocksdb_write_delay_time": {
+      "description": "Rocksdb write delay time",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "rocksdb.rocksdb_write_memtable_time": {
+      "description": "Rocksdb write memtable time",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "rocksdb.rocksdb_write_pre_and_post_time": {
+      "description": "total time spent on writing a record, excluding write process",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "rocksdb.rocksdb_write_wal_time": {
+      "description": "Rocksdb write wal time",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "rocksdb.submit_latency": {
+      "description": "Submit Latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "rocksdb.submit_sync_latency": {
+      "description": "Submit Sync Latency",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 12813003027,
+      "count": 4964
+    },
+    "rocksdb.submit_transaction": {
+      "description": "Submit transactions",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "rocksdb.submit_transaction_sync": {
+      "description": "Submit transactions sync",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 4964
+    }
+  },
+  "osd.0": {
+    "bluefs.bytes_written_slow": {
+      "description": "Bytes written to WAL/SSTs at slow device",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluefs.bytes_written_sst": {
+      "description": "Bytes written to SSTs",
+      "nick": "sst",
+      "type": 10,
+      "priority": 10,
+      "units": 0,
+      "value": 4096
+    },
+    "bluefs.bytes_written_wal": {
+      "description": "Bytes written to WAL",
+      "nick": "wal",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 2269184
+    },
+    "bluefs.db_total_bytes": {
+      "description": "Total bytes (main db device)",
+      "nick": "b",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 1073733632
+    },
+    "bluefs.db_used_bytes": {
+      "description": "Used bytes (main db device)",
+      "nick": "u",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 8380416
+    },
+    "bluefs.log_bytes": {
+      "description": "Size of the metadata log",
+      "nick": "jlen",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 90112
+    },
+    "bluefs.logged_bytes": {
+      "description": "Bytes written to the metadata log",
+      "nick": "j",
+      "type": 10,
+      "priority": 10,
+      "units": 0,
+      "value": 24576
+    },
+    "bluefs.num_files": {
+      "description": "File count",
+      "nick": "f",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 10
+    },
+    "bluefs.read_bytes": {
+      "description": "Bytes requested in buffered read mode",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 81569
+    },
+    "bluefs.read_prefetch_bytes": {
+      "description": "Bytes requested in prefetch read mode",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 2217
+    },
+    "bluefs.read_random_buffer_bytes": {
+      "description": "Bytes read from prefetch buffer in random read mode",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 2683
+    },
+    "bluefs.read_random_bytes": {
+      "description": "Bytes requested in random read mode",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 2683
+    },
+    "bluefs.read_random_disk_bytes": {
+      "description": "Bytes read from disk in random read mode",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluefs.slow_total_bytes": {
+      "description": "Total bytes (slow device)",
+      "nick": "slob",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 4294967296
+    },
+    "bluefs.slow_used_bytes": {
+      "description": "Used bytes (slow device)",
+      "nick": "slou",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluefs.wal_total_bytes": {
+      "description": "Total bytes (wal device)",
+      "nick": "walb",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 1048571904
+    },
+    "bluefs.wal_used_bytes": {
+      "description": "Used bytes (wal device)",
+      "nick": "walu",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 6287360
+    },
+    "bluestore.bluestore_compressed": {
+      "description": "Sum for stored compressed bytes",
+      "nick": "c",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluestore.bluestore_compressed_allocated": {
+      "description": "Sum for bytes allocated for compressed data",
+      "nick": "c_a",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluestore.bluestore_compressed_original": {
+      "description": "Sum for original bytes that were compressed",
+      "nick": "c_o",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluestore.commit_lat": {
+      "description": "Average commit latency",
+      "nick": "c_l",
+      "type": 5,
+      "priority": 10,
+      "units": 1,
+      "value": 2353149958,
+      "count": 354
+    },
+    "bluestore.kv_final_lat": {
+      "description": "Average kv_finalize thread latency",
+      "nick": "kf_l",
+      "type": 5,
+      "priority": 8,
+      "units": 1,
+      "value": 36765204,
+      "count": 109
+    },
+    "bluestore.kv_flush_lat": {
+      "description": "Average kv_thread flush latency",
+      "nick": "fl_l",
+      "type": 5,
+      "priority": 8,
+      "units": 1,
+      "value": 14372044,
+      "count": 109
+    },
+    "bluestore.kv_sync_lat": {
+      "description": "Average kv_sync thread latency",
+      "nick": "ks_l",
+      "type": 5,
+      "priority": 8,
+      "units": 1,
+      "value": 416303702,
+      "count": 109
+    },
+    "bluestore.read_lat": {
+      "description": "Average read latency",
+      "nick": "r_l",
+      "type": 5,
+      "priority": 10,
+      "units": 1,
+      "value": 5074695,
+      "count": 33
+    },
+    "bluestore.state_aio_wait_lat": {
+      "description": "Average aio_wait state latency",
+      "nick": "io_l",
+      "type": 5,
+      "priority": 8,
+      "units": 1,
+      "value": 239744,
+      "count": 354
+    },
+    "bluestore.submit_lat": {
+      "description": "Average submit latency",
+      "nick": "s_l",
+      "type": 5,
+      "priority": 10,
+      "units": 1,
+      "value": 199207734,
+      "count": 354
+    },
+    "bluestore.throttle_lat": {
+      "description": "Average submit throttle latency",
+      "nick": "th_l",
+      "type": 5,
+      "priority": 10,
+      "units": 1,
+      "value": 9125951,
+      "count": 354
+    },
+    "objecter.op_active": {
+      "description": "Operations active",
+      "nick": "actv",
+      "type": 2,
+      "priority": 10,
+      "units": 1,
+      "value": 0
+    },
+    "objecter.op_r": {
+      "description": "Read operations",
+      "nick": "rd",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 0
+    },
+    "objecter.op_rmw": {
+      "description": "Read-modify-write operations",
+      "nick": "rdwr",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "objecter.op_w": {
+      "description": "Write operations",
+      "nick": "wr",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 0
+    },
+    "osd.numpg": {
+      "description": "Placement groups",
+      "nick": "pgs",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 65
+    },
+    "osd.numpg_removing": {
+      "description": "Placement groups queued for local deletion",
+      "nick": "pgsr",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op": {
+      "description": "Client operations",
+      "nick": "ops",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 11
+    },
+    "osd.op_in_bytes": {
+      "description": "Client operations total write size",
+      "nick": "wr",
+      "type": 10,
+      "priority": 8,
+      "units": 0,
+      "value": 600
+    },
+    "osd.op_latency": {
+      "description": "Latency of client operations (including queue time)",
+      "nick": "l",
+      "type": 5,
+      "priority": 9,
+      "units": 1,
+      "value": 558054146,
+      "count": 11
+    },
+    "osd.op_out_bytes": {
+      "description": "Client operations total read size",
+      "nick": "rd",
+      "type": 10,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "osd.op_prepare_latency": {
+      "description": "Latency of client operations (excluding queue time and wait for finished)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 28096238,
+      "count": 13
+    },
+    "osd.op_process_latency": {
+      "description": "Latency of client operations (excluding queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 172671553,
+      "count": 11
+    },
+    "osd.op_r": {
+      "description": "Client read operations",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_r_latency": {
+      "description": "Latency of read operation (including queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_r_latency_out_bytes_histogram": {
+      "description": "Histogram of operation latency (including queue time) + data read",
+      "type": 26,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_r_out_bytes": {
+      "description": "Client data read",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "osd.op_r_prepare_latency": {
+      "description": "Latency of read operations (excluding queue time and wait for finished)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_r_process_latency": {
+      "description": "Latency of read operation (excluding queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_rw": {
+      "description": "Client read-modify-write operations",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_rw_in_bytes": {
+      "description": "Client read-modify-write operations write in",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "osd.op_rw_latency": {
+      "description": "Latency of read-modify-write operation (including queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_rw_latency_in_bytes_histogram": {
+      "description": "Histogram of rw operation latency (including queue time) + data written",
+      "type": 26,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_rw_latency_out_bytes_histogram": {
+      "description": "Histogram of rw operation latency (including queue time) + data read",
+      "type": 26,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_rw_out_bytes": {
+      "description": "Client read-modify-write operations read out ",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "osd.op_rw_prepare_latency": {
+      "description": "Latency of read-modify-write operations (excluding queue time and wait for finished)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_rw_process_latency": {
+      "description": "Latency of read-modify-write operation (excluding queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_w": {
+      "description": "Client write operations",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 11
+    },
+    "osd.op_w_in_bytes": {
+      "description": "Client data written",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 600
+    },
+    "osd.op_w_latency": {
+      "description": "Latency of write operation (including queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 558054146,
+      "count": 11
+    },
+    "osd.op_w_latency_in_bytes_histogram": {
+      "description": "Histogram of operation latency (including queue time) + data written",
+      "type": 26,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_w_prepare_latency": {
+      "description": "Latency of write operations (excluding queue time and wait for finished)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 28096238,
+      "count": 13
+    },
+    "osd.op_w_process_latency": {
+      "description": "Latency of write operation (excluding queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 172671553,
+      "count": 11
+    },
+    "osd.op_wip": {
+      "description": "Replication operations currently being processed (primary)",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.recovery_bytes": {
+      "description": "recovery bytes",
+      "nick": "rbt",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "osd.recovery_ops": {
+      "description": "Started recovery operations",
+      "nick": "rop",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "osd.stat_bytes": {
+      "description": "OSD size",
+      "nick": "size",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 108447916032
+    },
+    "osd.stat_bytes_used": {
+      "description": "Used space",
+      "nick": "used",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 2151473152
+    },
+    "prioritycache-0x55e1dfeaf450.cache_bytes": {
+      "description": "current memory available for caches.",
+      "nick": "c",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 2845415832
+    },
+    "prioritycache-0x55e1dfeaf450.heap_bytes": {
+      "description": "aggregate bytes in use by the heap",
+      "nick": "h",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 87990272
+    },
+    "prioritycache-0x55e1dfeaf450.mapped_bytes": {
+      "description": "total bytes mapped by the process",
+      "nick": "m",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 63135744
+    },
+    "prioritycache-0x55e1dfeaf450.target_bytes": {
+      "description": "target process memory usage in bytes",
+      "nick": "t",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 4294967296
+    },
+    "prioritycache-0x55e1dfeaf450.unmapped_bytes": {
+      "description": "unmapped bytes that the kernel has yet to reclaimed",
+      "nick": "u",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 24854528
+    },
+    "prioritycache:data.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 671088640
+    },
+    "prioritycache:data.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 397914628
+    },
+    "prioritycache:data.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 273174012
+    },
+    "prioritycache:kv.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 1073741824
+    },
+    "prioritycache:kv.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 864
+    },
+    "prioritycache:kv.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 795829256
+    },
+    "prioritycache:kv.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 1024
+    },
+    "prioritycache:kv.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 277910680
+    },
+    "prioritycache:meta.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 1073741824
+    },
+    "prioritycache:meta.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 795829256
+    },
+    "prioritycache:meta.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 202786
+    },
+    "prioritycache:meta.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 277709782
+    }
+  },
+  "osd.1": {
+    "bluefs.bytes_written_slow": {
+      "description": "Bytes written to WAL/SSTs at slow device",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluefs.bytes_written_sst": {
+      "description": "Bytes written to SSTs",
+      "nick": "sst",
+      "type": 10,
+      "priority": 10,
+      "units": 0,
+      "value": 4096
+    },
+    "bluefs.bytes_written_wal": {
+      "description": "Bytes written to WAL",
+      "nick": "wal",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 2203648
+    },
+    "bluefs.db_total_bytes": {
+      "description": "Total bytes (main db device)",
+      "nick": "b",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 1073733632
+    },
+    "bluefs.db_used_bytes": {
+      "description": "Used bytes (main db device)",
+      "nick": "u",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 8380416
+    },
+    "bluefs.log_bytes": {
+      "description": "Size of the metadata log",
+      "nick": "jlen",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 90112
+    },
+    "bluefs.logged_bytes": {
+      "description": "Bytes written to the metadata log",
+      "nick": "j",
+      "type": 10,
+      "priority": 10,
+      "units": 0,
+      "value": 24576
+    },
+    "bluefs.num_files": {
+      "description": "File count",
+      "nick": "f",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 10
+    },
+    "bluefs.read_bytes": {
+      "description": "Bytes requested in buffered read mode",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 81569
+    },
+    "bluefs.read_prefetch_bytes": {
+      "description": "Bytes requested in prefetch read mode",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 2217
+    },
+    "bluefs.read_random_buffer_bytes": {
+      "description": "Bytes read from prefetch buffer in random read mode",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 2683
+    },
+    "bluefs.read_random_bytes": {
+      "description": "Bytes requested in random read mode",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 2683
+    },
+    "bluefs.read_random_disk_bytes": {
+      "description": "Bytes read from disk in random read mode",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluefs.slow_total_bytes": {
+      "description": "Total bytes (slow device)",
+      "nick": "slob",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 4294967296
+    },
+    "bluefs.slow_used_bytes": {
+      "description": "Used bytes (slow device)",
+      "nick": "slou",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluefs.wal_total_bytes": {
+      "description": "Total bytes (wal device)",
+      "nick": "walb",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 1048571904
+    },
+    "bluefs.wal_used_bytes": {
+      "description": "Used bytes (wal device)",
+      "nick": "walu",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 6287360
+    },
+    "bluestore.bluestore_compressed": {
+      "description": "Sum for stored compressed bytes",
+      "nick": "c",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluestore.bluestore_compressed_allocated": {
+      "description": "Sum for bytes allocated for compressed data",
+      "nick": "c_a",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluestore.bluestore_compressed_original": {
+      "description": "Sum for original bytes that were compressed",
+      "nick": "c_o",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluestore.commit_lat": {
+      "description": "Average commit latency",
+      "nick": "c_l",
+      "type": 5,
+      "priority": 10,
+      "units": 1,
+      "value": 2766950660,
+      "count": 345
+    },
+    "bluestore.kv_final_lat": {
+      "description": "Average kv_finalize thread latency",
+      "nick": "kf_l",
+      "type": 5,
+      "priority": 8,
+      "units": 1,
+      "value": 38383359,
+      "count": 104
+    },
+    "bluestore.kv_flush_lat": {
+      "description": "Average kv_thread flush latency",
+      "nick": "fl_l",
+      "type": 5,
+      "priority": 8,
+      "units": 1,
+      "value": 36162986,
+      "count": 104
+    },
+    "bluestore.kv_sync_lat": {
+      "description": "Average kv_sync thread latency",
+      "nick": "ks_l",
+      "type": 5,
+      "priority": 8,
+      "units": 1,
+      "value": 406188242,
+      "count": 104
+    },
+    "bluestore.read_lat": {
+      "description": "Average read latency",
+      "nick": "r_l",
+      "type": 5,
+      "priority": 10,
+      "units": 1,
+      "value": 3701811,
+      "count": 33
+    },
+    "bluestore.state_aio_wait_lat": {
+      "description": "Average aio_wait state latency",
+      "nick": "io_l",
+      "type": 5,
+      "priority": 8,
+      "units": 1,
+      "value": 293308,
+      "count": 345
+    },
+    "bluestore.submit_lat": {
+      "description": "Average submit latency",
+      "nick": "s_l",
+      "type": 5,
+      "priority": 10,
+      "units": 1,
+      "value": 176765527,
+      "count": 345
+    },
+    "bluestore.throttle_lat": {
+      "description": "Average submit throttle latency",
+      "nick": "th_l",
+      "type": 5,
+      "priority": 10,
+      "units": 1,
+      "value": 7782002,
+      "count": 345
+    },
+    "objecter.op_active": {
+      "description": "Operations active",
+      "nick": "actv",
+      "type": 2,
+      "priority": 10,
+      "units": 1,
+      "value": 0
+    },
+    "objecter.op_r": {
+      "description": "Read operations",
+      "nick": "rd",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 0
+    },
+    "objecter.op_rmw": {
+      "description": "Read-modify-write operations",
+      "nick": "rdwr",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "objecter.op_w": {
+      "description": "Write operations",
+      "nick": "wr",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 0
+    },
+    "osd.numpg": {
+      "description": "Placement groups",
+      "nick": "pgs",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 65
+    },
+    "osd.numpg_removing": {
+      "description": "Placement groups queued for local deletion",
+      "nick": "pgsr",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op": {
+      "description": "Client operations",
+      "nick": "ops",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 7
+    },
+    "osd.op_in_bytes": {
+      "description": "Client operations total write size",
+      "nick": "wr",
+      "type": 10,
+      "priority": 8,
+      "units": 0,
+      "value": 160
+    },
+    "osd.op_latency": {
+      "description": "Latency of client operations (including queue time)",
+      "nick": "l",
+      "type": 5,
+      "priority": 9,
+      "units": 1,
+      "value": 350123026,
+      "count": 7
+    },
+    "osd.op_out_bytes": {
+      "description": "Client operations total read size",
+      "nick": "rd",
+      "type": 10,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "osd.op_prepare_latency": {
+      "description": "Latency of client operations (excluding queue time and wait for finished)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 43115403,
+      "count": 8
+    },
+    "osd.op_process_latency": {
+      "description": "Latency of client operations (excluding queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 310761337,
+      "count": 7
+    },
+    "osd.op_r": {
+      "description": "Client read operations",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_r_latency": {
+      "description": "Latency of read operation (including queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_r_latency_out_bytes_histogram": {
+      "description": "Histogram of operation latency (including queue time) + data read",
+      "type": 26,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_r_out_bytes": {
+      "description": "Client data read",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "osd.op_r_prepare_latency": {
+      "description": "Latency of read operations (excluding queue time and wait for finished)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_r_process_latency": {
+      "description": "Latency of read operation (excluding queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_rw": {
+      "description": "Client read-modify-write operations",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_rw_in_bytes": {
+      "description": "Client read-modify-write operations write in",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "osd.op_rw_latency": {
+      "description": "Latency of read-modify-write operation (including queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_rw_latency_in_bytes_histogram": {
+      "description": "Histogram of rw operation latency (including queue time) + data written",
+      "type": 26,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_rw_latency_out_bytes_histogram": {
+      "description": "Histogram of rw operation latency (including queue time) + data read",
+      "type": 26,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_rw_out_bytes": {
+      "description": "Client read-modify-write operations read out ",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "osd.op_rw_prepare_latency": {
+      "description": "Latency of read-modify-write operations (excluding queue time and wait for finished)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_rw_process_latency": {
+      "description": "Latency of read-modify-write operation (excluding queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_w": {
+      "description": "Client write operations",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 7
+    },
+    "osd.op_w_in_bytes": {
+      "description": "Client data written",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 160
+    },
+    "osd.op_w_latency": {
+      "description": "Latency of write operation (including queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 350123026,
+      "count": 7
+    },
+    "osd.op_w_latency_in_bytes_histogram": {
+      "description": "Histogram of operation latency (including queue time) + data written",
+      "type": 26,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_w_prepare_latency": {
+      "description": "Latency of write operations (excluding queue time and wait for finished)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 43115403,
+      "count": 8
+    },
+    "osd.op_w_process_latency": {
+      "description": "Latency of write operation (excluding queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 310761337,
+      "count": 7
+    },
+    "osd.op_wip": {
+      "description": "Replication operations currently being processed (primary)",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.recovery_bytes": {
+      "description": "recovery bytes",
+      "nick": "rbt",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "osd.recovery_ops": {
+      "description": "Started recovery operations",
+      "nick": "rop",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "osd.stat_bytes": {
+      "description": "OSD size",
+      "nick": "size",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 108447916032
+    },
+    "osd.stat_bytes_used": {
+      "description": "Used space",
+      "nick": "used",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 2151473152
+    },
+    "prioritycache-0x564566a6b450.cache_bytes": {
+      "description": "current memory available for caches.",
+      "nick": "c",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 2845415832
+    },
+    "prioritycache-0x564566a6b450.heap_bytes": {
+      "description": "aggregate bytes in use by the heap",
+      "nick": "h",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 87990272
+    },
+    "prioritycache-0x564566a6b450.mapped_bytes": {
+      "description": "total bytes mapped by the process",
+      "nick": "m",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 62586880
+    },
+    "prioritycache-0x564566a6b450.target_bytes": {
+      "description": "target process memory usage in bytes",
+      "nick": "t",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 4294967296
+    },
+    "prioritycache-0x564566a6b450.unmapped_bytes": {
+      "description": "unmapped bytes that the kernel has yet to reclaimed",
+      "nick": "u",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 25403392
+    },
+    "prioritycache:data.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 671088640
+    },
+    "prioritycache:data.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 397914557
+    },
+    "prioritycache:data.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 273174083
+    },
+    "prioritycache:kv.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 1073741824
+    },
+    "prioritycache:kv.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 864
+    },
+    "prioritycache:kv.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 795829116
+    },
+    "prioritycache:kv.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 1024
+    },
+    "prioritycache:kv.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 277910820
+    },
+    "prioritycache:meta.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 1073741824
+    },
+    "prioritycache:meta.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 795829116
+    },
+    "prioritycache:meta.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 203138
+    },
+    "prioritycache:meta.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 277709570
+    }
+  },
+  "osd.2": {
+    "bluefs.bytes_written_slow": {
+      "description": "Bytes written to WAL/SSTs at slow device",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluefs.bytes_written_sst": {
+      "description": "Bytes written to SSTs",
+      "nick": "sst",
+      "type": 10,
+      "priority": 10,
+      "units": 0,
+      "value": 4096
+    },
+    "bluefs.bytes_written_wal": {
+      "description": "Bytes written to WAL",
+      "nick": "wal",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 2064384
+    },
+    "bluefs.db_total_bytes": {
+      "description": "Total bytes (main db device)",
+      "nick": "b",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 1073733632
+    },
+    "bluefs.db_used_bytes": {
+      "description": "Used bytes (main db device)",
+      "nick": "u",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 8380416
+    },
+    "bluefs.log_bytes": {
+      "description": "Size of the metadata log",
+      "nick": "jlen",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 90112
+    },
+    "bluefs.logged_bytes": {
+      "description": "Bytes written to the metadata log",
+      "nick": "j",
+      "type": 10,
+      "priority": 10,
+      "units": 0,
+      "value": 24576
+    },
+    "bluefs.num_files": {
+      "description": "File count",
+      "nick": "f",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 10
+    },
+    "bluefs.read_bytes": {
+      "description": "Bytes requested in buffered read mode",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 81569
+    },
+    "bluefs.read_prefetch_bytes": {
+      "description": "Bytes requested in prefetch read mode",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 2217
+    },
+    "bluefs.read_random_buffer_bytes": {
+      "description": "Bytes read from prefetch buffer in random read mode",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 2683
+    },
+    "bluefs.read_random_bytes": {
+      "description": "Bytes requested in random read mode",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 2683
+    },
+    "bluefs.read_random_disk_bytes": {
+      "description": "Bytes read from disk in random read mode",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluefs.slow_total_bytes": {
+      "description": "Total bytes (slow device)",
+      "nick": "slob",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 4294967296
+    },
+    "bluefs.slow_used_bytes": {
+      "description": "Used bytes (slow device)",
+      "nick": "slou",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluefs.wal_total_bytes": {
+      "description": "Total bytes (wal device)",
+      "nick": "walb",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 1048571904
+    },
+    "bluefs.wal_used_bytes": {
+      "description": "Used bytes (wal device)",
+      "nick": "walu",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 6287360
+    },
+    "bluestore.bluestore_compressed": {
+      "description": "Sum for stored compressed bytes",
+      "nick": "c",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluestore.bluestore_compressed_allocated": {
+      "description": "Sum for bytes allocated for compressed data",
+      "nick": "c_a",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluestore.bluestore_compressed_original": {
+      "description": "Sum for original bytes that were compressed",
+      "nick": "c_o",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "bluestore.commit_lat": {
+      "description": "Average commit latency",
+      "nick": "c_l",
+      "type": 5,
+      "priority": 10,
+      "units": 1,
+      "value": 3363986772,
+      "count": 331
+    },
+    "bluestore.kv_final_lat": {
+      "description": "Average kv_finalize thread latency",
+      "nick": "kf_l",
+      "type": 5,
+      "priority": 8,
+      "units": 1,
+      "value": 30048903,
+      "count": 80
+    },
+    "bluestore.kv_flush_lat": {
+      "description": "Average kv_thread flush latency",
+      "nick": "fl_l",
+      "type": 5,
+      "priority": 8,
+      "units": 1,
+      "value": 22620707,
+      "count": 80
+    },
+    "bluestore.kv_sync_lat": {
+      "description": "Average kv_sync thread latency",
+      "nick": "ks_l",
+      "type": 5,
+      "priority": 8,
+      "units": 1,
+      "value": 381826619,
+      "count": 80
+    },
+    "bluestore.read_lat": {
+      "description": "Average read latency",
+      "nick": "r_l",
+      "type": 5,
+      "priority": 10,
+      "units": 1,
+      "value": 3599529,
+      "count": 31
+    },
+    "bluestore.state_aio_wait_lat": {
+      "description": "Average aio_wait state latency",
+      "nick": "io_l",
+      "type": 5,
+      "priority": 8,
+      "units": 1,
+      "value": 223154,
+      "count": 331
+    },
+    "bluestore.submit_lat": {
+      "description": "Average submit latency",
+      "nick": "s_l",
+      "type": 5,
+      "priority": 10,
+      "units": 1,
+      "value": 167463184,
+      "count": 331
+    },
+    "bluestore.throttle_lat": {
+      "description": "Average submit throttle latency",
+      "nick": "th_l",
+      "type": 5,
+      "priority": 10,
+      "units": 1,
+      "value": 7232907,
+      "count": 331
+    },
+    "objecter.op_active": {
+      "description": "Operations active",
+      "nick": "actv",
+      "type": 2,
+      "priority": 10,
+      "units": 1,
+      "value": 0
+    },
+    "objecter.op_r": {
+      "description": "Read operations",
+      "nick": "rd",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 0
+    },
+    "objecter.op_rmw": {
+      "description": "Read-modify-write operations",
+      "nick": "rdwr",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "objecter.op_w": {
+      "description": "Write operations",
+      "nick": "wr",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 0
+    },
+    "osd.numpg": {
+      "description": "Placement groups",
+      "nick": "pgs",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 65
+    },
+    "osd.numpg_removing": {
+      "description": "Placement groups queued for local deletion",
+      "nick": "pgsr",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op": {
+      "description": "Client operations",
+      "nick": "ops",
+      "type": 10,
+      "priority": 10,
+      "units": 1,
+      "value": 15
+    },
+    "osd.op_in_bytes": {
+      "description": "Client operations total write size",
+      "nick": "wr",
+      "type": 10,
+      "priority": 8,
+      "units": 0,
+      "value": 1526
+    },
+    "osd.op_latency": {
+      "description": "Latency of client operations (including queue time)",
+      "nick": "l",
+      "type": 5,
+      "priority": 9,
+      "units": 1,
+      "value": 862528258,
+      "count": 15
+    },
+    "osd.op_out_bytes": {
+      "description": "Client operations total read size",
+      "nick": "rd",
+      "type": 10,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "osd.op_prepare_latency": {
+      "description": "Latency of client operations (excluding queue time and wait for finished)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 59888414,
+      "count": 18
+    },
+    "osd.op_process_latency": {
+      "description": "Latency of client operations (excluding queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 494726961,
+      "count": 15
+    },
+    "osd.op_r": {
+      "description": "Client read operations",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_r_latency": {
+      "description": "Latency of read operation (including queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_r_latency_out_bytes_histogram": {
+      "description": "Histogram of operation latency (including queue time) + data read",
+      "type": 26,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_r_out_bytes": {
+      "description": "Client data read",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "osd.op_r_prepare_latency": {
+      "description": "Latency of read operations (excluding queue time and wait for finished)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_r_process_latency": {
+      "description": "Latency of read operation (excluding queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_rw": {
+      "description": "Client read-modify-write operations",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_rw_in_bytes": {
+      "description": "Client read-modify-write operations write in",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "osd.op_rw_latency": {
+      "description": "Latency of read-modify-write operation (including queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_rw_latency_in_bytes_histogram": {
+      "description": "Histogram of rw operation latency (including queue time) + data written",
+      "type": 26,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_rw_latency_out_bytes_histogram": {
+      "description": "Histogram of rw operation latency (including queue time) + data read",
+      "type": 26,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_rw_out_bytes": {
+      "description": "Client read-modify-write operations read out ",
+      "type": 10,
+      "priority": 5,
+      "units": 0,
+      "value": 0
+    },
+    "osd.op_rw_prepare_latency": {
+      "description": "Latency of read-modify-write operations (excluding queue time and wait for finished)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_rw_process_latency": {
+      "description": "Latency of read-modify-write operation (excluding queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 0,
+      "count": 0
+    },
+    "osd.op_w": {
+      "description": "Client write operations",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 15
+    },
+    "osd.op_w_in_bytes": {
+      "description": "Client data written",
+      "type": 10,
+      "priority": 5,
+      "units": 1,
+      "value": 1526
+    },
+    "osd.op_w_latency": {
+      "description": "Latency of write operation (including queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 862528258,
+      "count": 15
+    },
+    "osd.op_w_latency_in_bytes_histogram": {
+      "description": "Histogram of operation latency (including queue time) + data written",
+      "type": 26,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.op_w_prepare_latency": {
+      "description": "Latency of write operations (excluding queue time and wait for finished)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 59888414,
+      "count": 18
+    },
+    "osd.op_w_process_latency": {
+      "description": "Latency of write operation (excluding queue time)",
+      "type": 5,
+      "priority": 5,
+      "units": 1,
+      "value": 494726961,
+      "count": 15
+    },
+    "osd.op_wip": {
+      "description": "Replication operations currently being processed (primary)",
+      "type": 2,
+      "priority": 5,
+      "units": 1,
+      "value": 0
+    },
+    "osd.recovery_bytes": {
+      "description": "recovery bytes",
+      "nick": "rbt",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "osd.recovery_ops": {
+      "description": "Started recovery operations",
+      "nick": "rop",
+      "type": 10,
+      "priority": 8,
+      "units": 1,
+      "value": 0
+    },
+    "osd.stat_bytes": {
+      "description": "OSD size",
+      "nick": "size",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 108447916032
+    },
+    "osd.stat_bytes_used": {
+      "description": "Used space",
+      "nick": "used",
+      "type": 2,
+      "priority": 5,
+      "units": 0,
+      "value": 2151473152
+    },
+    "prioritycache-0x55ea5d399450.cache_bytes": {
+      "description": "current memory available for caches.",
+      "nick": "c",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 2845415832
+    },
+    "prioritycache-0x55ea5d399450.heap_bytes": {
+      "description": "aggregate bytes in use by the heap",
+      "nick": "h",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 87990272
+    },
+    "prioritycache-0x55ea5d399450.mapped_bytes": {
+      "description": "total bytes mapped by the process",
+      "nick": "m",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 61767680
+    },
+    "prioritycache-0x55ea5d399450.target_bytes": {
+      "description": "target process memory usage in bytes",
+      "nick": "t",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 4294967296
+    },
+    "prioritycache-0x55ea5d399450.unmapped_bytes": {
+      "description": "unmapped bytes that the kernel has yet to reclaimed",
+      "nick": "u",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 26222592
+    },
+    "prioritycache:data.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 671088640
+    },
+    "prioritycache:data.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 397914557
+    },
+    "prioritycache:data.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:data.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 273174083
+    },
+    "prioritycache:kv.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 1073741824
+    },
+    "prioritycache:kv.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 864
+    },
+    "prioritycache:kv.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 795829116
+    },
+    "prioritycache:kv.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 1024
+    },
+    "prioritycache:kv.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:kv.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 277910820
+    },
+    "prioritycache:meta.committed_bytes": {
+      "description": "total bytes committed,",
+      "nick": "c",
+      "type": 2,
+      "priority": 10,
+      "units": 0,
+      "value": 1073741824
+    },
+    "prioritycache:meta.pri0_bytes": {
+      "description": "bytes allocated to pri0",
+      "nick": "p0",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri10_bytes": {
+      "description": "bytes allocated to pri10",
+      "nick": "p10",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri11_bytes": {
+      "description": "bytes allocated to pri11",
+      "nick": "p11",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 795829116
+    },
+    "prioritycache:meta.pri1_bytes": {
+      "description": "bytes allocated to pri1",
+      "nick": "p1",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 203138
+    },
+    "prioritycache:meta.pri2_bytes": {
+      "description": "bytes allocated to pri2",
+      "nick": "p2",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri3_bytes": {
+      "description": "bytes allocated to pri3",
+      "nick": "p3",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri4_bytes": {
+      "description": "bytes allocated to pri4",
+      "nick": "p4",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri5_bytes": {
+      "description": "bytes allocated to pri5",
+      "nick": "p5",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri6_bytes": {
+      "description": "bytes allocated to pri6",
+      "nick": "p6",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri7_bytes": {
+      "description": "bytes allocated to pri7",
+      "nick": "p7",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri8_bytes": {
+      "description": "bytes allocated to pri8",
+      "nick": "p8",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.pri9_bytes": {
+      "description": "bytes allocated to pri9",
+      "nick": "p9",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 0
+    },
+    "prioritycache:meta.reserved_bytes": {
+      "description": "bytes reserved for future growth.",
+      "nick": "r",
+      "type": 2,
+      "priority": 8,
+      "units": 0,
+      "value": 277709570
+    }
+  }
+}
