@@ -24,6 +24,8 @@ node:
 
 opt:
   heartbeat : 5
+  dbfile: replaydb.sqlite
+  disable_same_thread_check: False
   dashboard_addr : ceph-dashboard
   dashboard_port : 41422
   auth: 
@@ -37,3 +39,4 @@ ceph-param:
   - rbd_cache_size
   - ms_tcp_prefetch_max_size
   - ms_tcp_rcvbuf
+
