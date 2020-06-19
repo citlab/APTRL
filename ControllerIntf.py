@@ -3,12 +3,12 @@
 '''Controller Interface Daemon'''
 
 # Import some necessary modules
-import time
+import time as time
 import pickle
 import copy
 
 from ceph_agent.ApiRequest import *
-# from ReplayDB import *
+from ReplayDB import *
 
 __autor__ = 'Puriwat Khantiviriya'
 
@@ -72,7 +72,7 @@ class ControllerInft:
         # Start DBReplay here
         # ReplayDB must be created in start(), which may be run in a separate thread.
         # SQLite doesn't like the DBConn be created in different threads.
-        # db = ReplayDB(self.opt)
+        db = ReplayDB(self.opt)
 
         addr = self.opt['dashboard_addr']
         port = self.opt['dashboard_port']
@@ -101,31 +101,39 @@ class ControllerInft:
         # print(a.performance('mon','a'))
 
         # setup heartbeat
-        heartbeat = time.time()
-
-
-        print(f"Hello world{self.opt}")
-        self.heartbeat = self.opt['heartbeat']
+        print(f"Options: {self.opt}")
+        self.heartbeat = time.time()
         self.param_log = []
+        self.log_times = []
         while(True):
             # flush log
 
             # Getting data from storage and client
             # Check data and store data in Replay DB
             # get Parameter, performance indicator and store it into ReplayDB
+            log_time = time.time()
+            if(int(log_time) not in self.log_times):
+                self.log_times.append(int(log_time))
             for param in self.conf['ceph-param']:
                 self.param_log.append(a.clusterConfig(param=param))
+            db.insert_action(int(log_time), self.param_log)
+                # self.param_log.append(a.clusterConfig(param=param))
                 # Extract Name, type, value from each param 
-            a.performance
+            # a.performance(section='osd', '0')
 
             # Check health for tuning system, storage and client
             # self._health_check()
 
             # check time with heartbeat if less than 0.9 seconds
             if(time.time() - self.heartbeat >= 5):
-                print(self.param_log)
+                for lo_time in self.log_times:
+                    print(f'At time: {lo_time} store value {db.get_action(lo_time)}')
+                # for param in self.param_log:
+                #     print(f"{str(param['name'])} : {str(param['type'])}")
+                print('-'*50)
                 # set heartbeat
                 self.heartbeat = time.time()
+                self.log_times = []
                 self.param_log = []
 
 

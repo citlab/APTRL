@@ -5,6 +5,7 @@
 import numpy as np
 import pickle
 import sqlite3
+from sqlite3 import Error
 from typing import *
 from ascar_logging import logger
 
@@ -67,17 +68,16 @@ class ReplayDB:
         # Enable WAL mode for better concurrent read/write
         c.execute('PRAGMA journal_mode=WAL;')
         # performance indicators
-        c.execute('''CREATE TABLE IF NOT EXISTS perfs (
-                        node_id INTEGER CHECK (TYPEOF(node_id) = 'integer'),
-                        time    INTEGER CHECK (TYPEOF(ts) = 'integer'),
-                        perf_counter BLOB,
-                        PRIMARY KEY (node_id, time))''')
-        c.execute('CREATE INDEX IF NOT EXISTS perfs_time_index ON perfs (time)')
-        c.execute('CREATE INDEX IF NOT EXISTS perfs_time_node_id_index ON pis (time, node_id)')
+        # c.execute('''CREATE TABLE IF NOT EXISTS perfs (
+        #                 ts   INTEGER PRIMARY KEY CHECK (TYPEOF(ts) = 'integer'),
+        #                 perf_counter BLOB)''')
+        # c.execute('CREATE INDEX IF NOT EXISTS perfs_ts_index ON perfs (ts)')
         # actions
-        c.execute('''CREATE TABLE IF NOT EXISTS actions (
-                        time     INTEGER PRIMARY KEY CHECK (TYPEOF(time) = 'integer'),
-                        action INTEGER             CHECK (TYPEOF(action) = 'integer'))''')
+        c.execute('''CREATE TABLE IF NOT EXISTS actions(
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        ts INTEGER CHECK (TYPEOF(ts) = 'integer'),
+                        action BLOB)''')
+        print('created table for actions and perfs')
         self.conn.commit()
         c.execute('ANALYZE')
         self.conn.commit()
@@ -97,59 +97,64 @@ class ReplayDB:
         else:
             self.conn = sqlite3.connect(dbfile, timeout=120,
                                         detect_types=sqlite3.PARSE_COLNAMES | sqlite3.PARSE_DECLTYPES)
-        logger.info('Connected to database %s' % dbfile)
+        print(f'Connected to database {dbfile}')
 
-    def insert_perf(self, node_id: int, time: int, data):
+    def insert_perf(self, node_id: int, ts: int, data):
         c = self.conn.cursor()
         c.arraysize = 2
-
         # If there's a missing entry before time, insert time as time-1
         # Checking table before insert
-        c.execute('SELECT time FROM perfs WHERE node_id=? AND time>=? AND time<? ORDER BY time', (node_id, time-2, time))
+        c.execute('SELECT ts FROM perfs WHERE ts>=? AND ts<? ORDER BY ts', (ts-2, ts))
         prev_t = c.fetchall()
         if len(prev_t) == 1 and prev_t[0][0] == ts-2:
-            t -= 1
-            logger.debug(f"A previous missing entry detected, storing PI for node_id \
-                {str(node_id)} at {str(ts-1)} {str(ts)}")
+            ts -= 1
+            logger.debug(f"A previous missing entry detected, storing PI at {str(ts-1)} {str(ts)}")
         else:
-            logger.debug(f"Storing PI for node_id {str(node_id)}, time {str(ts)}")
+            logger.debug(f"Storing PI at ts {str(ts)}")
 
         # Insert to table
         try:
-            c.execute('INSERT INTO perfs VALUES (?,?,?)', (node_id, time, data))
+            c.execute('INSERT INTO perfs VALUES (?,?)', (ts, pickle.dumps(data)))
             self.conn.commit()
         except sqlite3.IntegrityError as e:
             logger.warning('{type}: {msg}'.format(type=type(e).__name__, msg=str(e)))
             if 'constraint failed' in str(e):
                 raise
 
-    def insert_action(self, time: int, action: int):
-        assert isinstance(action, int)
+    def insert_action(self, ts: int, action):
+
+        # assert isinstance(action, dict)
+        # print(f'Trying to store {action} at {ts}')
         try:
             c = self.conn.cursor()
-            c.execute('INSERT INTO actions VALUES (?,?)', (ts, action))
-            logger.debug(f'Stored action {action} at {time}')
+            action_pickle = pickle.dumps(action)
+            c.execute('INSERT INTO actions VALUES (?,?,?)', (None,ts, action_pickle))
+            print(f'Stored action at {ts} in DB')
             self.conn.commit()
         except sqlite3.IntegrityError as e:
             logger.warning('{type}: {msg}'.format(type=type(e).__name__, msg=str(e)))
             if 'constraint failed' in str(e):
                 raise
 
-    def get_pi(self, node_id: int, time: float) -> []:
+    def get_pi(self, node_id: int, ts: int) -> []:
         c = self.conn.cursor()
-        c.execute('SELECT * FROM perfs WHERE node_id = ? AND time = ?', (node_id, int(time)))
+        c.execute('SELECT * FROM perfs WHERE ts = ?', (int(ts)))
         data = c.fetchone()
+        data = pickle.loads(data)
         if not data:
             raise ValueError
         return data[2]
 
-    def get_action(self, time: int) -> int:
+    def get_action(self, ts: int) -> int:
         c = self.conn.cursor()
-        c.execute('SELECT * FROM actions WHERE time = ?', [time])
-        data = c.fetchone()
-        if not data:
+        c.execute('SELECT action FROM actions WHERE ts = ?', [ts])
+        action = c.fetchone()
+        # Return as tuple so, require to get only first index
+        # print(f'Get action: {action}')
+        action = pickle.loads(action[0])
+        if not action:
             return 0     # 0 is no action
-        return data[1]
+        return action
 
     def get_action_row_count(self):
         c = self.conn.cursor()

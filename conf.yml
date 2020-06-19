@@ -24,10 +24,10 @@ node:
 
 opt:
   heartbeat : 5
-  dbfile: replaydb.sqlite
+  dbfile: /home/pkhantiviriya/APTRL/replaydb.sqlite
   disable_same_thread_check: False
   dashboard_addr : ceph-dashboard
-  dashboard_port : 41422
+  dashboard_port : 41708
   auth: 
     username : admin
     passwd : admin
@@ -39,4 +39,5 @@ ceph-param:
   - rbd_cache_size
   - ms_tcp_prefetch_max_size
   - ms_tcp_rcvbuf
+  - bluestore_compression_algorithm
 
