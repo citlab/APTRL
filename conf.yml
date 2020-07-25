@@ -1,43 +1,34 @@
 intf:
-  ControllerIntf.ControllerIntf_logfile : controller_log.log
+  ControllerIntf.ControllerIntf_logfile : /home/pkhantiviriya/APTRL/log/controller_log.log
 
 node:
-  node_id : 
-    - mon.a : 1
-    - mon.b : 2
-    - mon.c : 3
-    - client.a : 4
-    - client.b : 5
-    - client.c : 6
-    - client.d : 7
-  
-  server_node :
-    - mon.a
-    - mon.b
-    - mon.c
+  node_name : 
+    - master
+    - node1
+    - node2
+    - node3
 
-  client_node :
-    - client.a
-    - client.b
-    - client.c
-    - client.d
+  server_id :
+    - 1: master
+
+  client_id:
+    - 1: node1
+    - 2: node2
+    - 3: node3
 
 opt:
   heartbeat : 5
   dbfile: /home/pkhantiviriya/APTRL/replaydb.sqlite
   disable_same_thread_check: False
-  dashboard_addr : ceph-dashboard
-  dashboard_port : 41708
+  dashboard_addr : 10.20.16.200
+  dashboard_port : 8443
   auth: 
     username : admin
     passwd : admin
 
 ceph-param: 
   - osd_memory_target
-  - osd_recovery_sleep
-  - rbd_cache 
   - rbd_cache_size
   - ms_tcp_prefetch_max_size
   - ms_tcp_rcvbuf
-  - bluestore_compression_algorithm
 

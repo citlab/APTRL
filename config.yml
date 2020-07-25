@@ -1,0 +1,61 @@
+# Log configuration
+log:
+  dqldaemon_debugging_level: 1
+  log_location: /home/pkhantiviriya/APTRL/log/
+  DQLDaemon.DQLDaemon_logfile : /home/pkhantiviriya/APTRL/log/dql_log.log
+  ControllerIntf.ControllerIntf_logfile : /home/pkhantiviriya/APTRL/log/controller_log.log
+  MLDaemon.MLDaemon_logfile: /home/pkhantiviriya/APTRL/log/ml_log.log
+
+# Replay database configuration
+replaydb:
+  dbfile: /home/pkhantiviriya/APTRL/replaydb.sqlite
+
+# Client&Server nodes
+node:
+  node_name : 
+    - master
+    - node1
+    - node2
+    - node3
+
+  server_id :
+    - 1: master
+
+  client_id:
+    - 0: host
+
+# Parameter for tuning in Ceph cluster
+ceph-param: 
+  - osd_memory_target
+  - rbd_cache_size
+  - ms_tcp_prefetch_max_size
+  - ms_tcp_rcvbuf
+
+
+opt:
+  # Dashboard config
+  dashboard_addr : 10.20.16.200
+  dashboard_port : 8443
+  auth: 
+    username : admin
+    passwd : admin
+
+  heartbeat : 5
+  # ML config section
+  disable_same_thread_check: False
+  delay_between-actions: 10
+  exploration_period: 3000
+  start_random_rate: 0.5
+  enable_tuning: True
+  disable_training: False
+  observation_size: 4
+  num_actions: 4
+  random_action_probability: 0.05
+  minibatch_size: 4
+  ticks_per_observation: 1
+  tick_len: 1
+  tick_data_size: 4
+  missing_entry_tolerance: 10
+  checkpoint_time: 1800
+  obd_per_client_ma: 1
+  pi_per_client_obd: 4

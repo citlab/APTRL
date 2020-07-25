@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-# import ascar.ascar_logging
+import ascar_logging as logger
 import daemon
 import importlib
 from lockfile.pidlockfile import PIDLockFile
@@ -30,7 +30,7 @@ def import_controller_intf(classname, opt, conf):
     m = importlib.import_module('.'.join(classname_part[:-1]))
     #import class
     m = getattr(m, classname_part[-1])
-    app = m(conf, opt)
+    app = m(conf=conf, opt=opt)
 
     return app
 
@@ -56,13 +56,13 @@ opt = conf['opt']
 pid_dir = sys.argv[3]
 
 # Adding logging
-# logfile = conf[classname + '_logfile'] if classname + '_logfile' in opt.keys()\
-#           else '/var/log/{0}.log'.format(classname)
-# ascar.add_log_file(logfile, opt.get('log_lazy_flush', False))
-# ascar.logger.setLevel(opt['loglevel'] if 'loglevel' in opt else logging.INFO)
+logfile = conf['log'][classname + '_logfile'] if classname + '_logfile' in conf['log'].keys()\
+        else '/var/log/{0}.log'.format(classname)
+logger.add_log_file(logfile, opt.get('log_lazy_flush', False))
+logger.logger.setLevel(opt['loglevel'] if 'loglevel' in opt else logging.INFO)
 
 # import controller for running daemon
-app = import_controller_intf(classname, conf, opt)
+app = import_controller_intf(classname, conf = conf, opt = opt)
 
 pidfile_name = os.path.join(pid_dir if pid_dir != '' else '/var/run',
                             classname + '.pid')
@@ -85,7 +85,7 @@ context.signal_map = {
     # signal.SIGUSR1: reload_program_config,
     }
 
-# context.files_preserve = [ascar.ascar_logging.log_handler.stream]
+context.files_preserve = [logger.log_handler.stream]
 
 with context:
     app.start()

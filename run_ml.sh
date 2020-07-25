@@ -1,7 +1,5 @@
 #!/bin/bash
-
-# Create a Control service
-
+# Control the Interface Daemon Service
 # 
 # Copyright (c) 2016, 2017 The Regents of the University of California. All
 # rights reserved.
@@ -34,38 +32,13 @@
 # STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 # OF THE POSSIBILITY OF SUCH DAMAGE.
-
 set -e -u
 
-# if [ $# -lt 2 ]; then
-#     cat <<EOF
-# Usage: $0 conffile <start|stop|status>
-# EOF
-#     exit 2
-# fi
-
-MODULE=$1
-CONF_FILE=$2
-CMD=$3
-
-PID_DIR="/tmp/"
-PID_FILE="$PID_DIR$MODULE.pid"
-
-if [ "$CMD" = "start" ]; then
-    # Run _run_service.py
-    echo "Starting service. PID file is located in $PID_FILE"
-    python3 _run_service.py "$MODULE" "$CONF_FILE" "$PID_DIR"
-elif [ "$CMD" = "stop" ]; then
-    # Stop the service using pidfile
-    echo "Stop $MODULE service"
-    if [ ! -e $PID_FILE ]; then
-        echo "$PID_FILE doesn't exist. Can't find the running process."
-        exit 3
-    fi
-    kill -9 `cat $PID_FILE`
-elif [ "$CMD" = "status" ]; then
-    echo "IDK ask someone else"
-else
-    echo "${CMD}: unknown command"
-    exit 255
+if [ $# -lt 2 ]; then
+    cat <<EOF
+Usage: $0 conffile <start|stop|status>
+EOF
+    exit 2
 fi
+
+`dirname $0`/_run_service.sh MLDaemon.MLDaemon "$@"

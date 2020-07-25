@@ -9,6 +9,7 @@ import copy
 
 from ceph_agent.ApiRequest import *
 from ReplayDB import *
+from fioClient import *
 
 __autor__ = 'Puriwat Khantiviriya'
 
@@ -30,7 +31,7 @@ class ControllerInft:
     serv_addr = ''
     port = ''
 
-    def __init__(self, opt: dict, conf: dict):
+    def __init__(self, conf: dict, opt: dict):
         '''
         Constructor for controller daemon
 
@@ -66,14 +67,15 @@ class ControllerInft:
         '''
         Start the interface daemon and start asking storage system
         '''
-        # assert something here! Should validate the storage access here
-        # assert
+        # assert something here! Check if storage is reachable
 
         # Start DBReplay here
         # ReplayDB must be created in start(), which may be run in a separate thread.
         # SQLite doesn't like the DBConn be created in different threads.
-        db = ReplayDB(self.opt)
+        db = ReplayDB(self.opt, self.conf)
 
+        #============= Action =================
+        # get dashboard address and port
         addr = self.opt['dashboard_addr']
         port = self.opt['dashboard_port']
 
@@ -85,20 +87,27 @@ class ControllerInft:
         # Ceph implementation is here
         a = ApiRequest(addr,port, cert)
 
+        #======================================
+
+        # Should have a function on its own
         # Checking API
         allPath = a.paths()
         if(allPath == None):
             raise Exception('Cannot reached Dashboard API')
             return
+        #========================================
+
+        #=============== PIs ====================
+
+        # get all client address from config file
+        client_addr = [self.conf['node']['node_id'][key] for key in self.conf['node']['client_node']]
+
+        # Create FioClient for getting PIs
+        fio = FioClient(client_addr, self.opt['job_file_loc'])
+        #========================================
 
         # Do Authentication for Dashboard
         a.auth(self.opt['auth']['username'], self.opt['auth']['passwd'])
-
-        # a.clusterConfig(param='osd_recovery_sleep', val='0', section='global')
-        # #print(a.clusterConfig(param='osd_recovery_sleep'))
-
-        # #print(a.health(report='minimal'))
-        # print(a.performance('mon','a'))
 
         # setup heartbeat
         print(f"Options: {self.opt}")
@@ -107,6 +116,14 @@ class ControllerInft:
         self.log_times = []
         while(True):
             # flush log
+
+
+            # run fio test to get PIs
+            output = fio.runTest()
+
+            # store PIs in DB
+            db.insert_perf(1, int(time.time()), output)
+            
 
             # Getting data from storage and client
             # Check data and store data in Replay DB

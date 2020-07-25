@@ -1,6 +1,6 @@
 from ceph_agent.ApiRequest import *
-from ascar.ReplayDB import *
-from ascar.ascar_logging import *
+from ReplayDB import *
+from ascar_logging import *
 
 import time
 __author__ = 'Yan Li'
