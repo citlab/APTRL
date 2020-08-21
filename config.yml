@@ -2,8 +2,8 @@
 log:
   dqldaemon_debugging_level: 1
   log_location: /home/pkhantiviriya/APTRL/log/
-  DQLDaemon.DQLDaemon_logfile : /home/pkhantiviriya/APTRL/log/dql_log.log
-  ControllerIntf.ControllerIntf_logfile : /home/pkhantiviriya/APTRL/log/controller_log.log
+  DQLDaemon.DQLDaemon_logfile: /home/pkhantiviriya/APTRL/log/dql_log.log
+  ControllerIntf.ControllerInft_logfile: /home/pkhantiviriya/APTRL/log/controller_log.log
   MLDaemon.MLDaemon_logfile: /home/pkhantiviriya/APTRL/log/ml_log.log
 
 # Replay database configuration
@@ -19,18 +19,44 @@ node:
     - node3
 
   server_id :
-    - 1: master
+    master: 1
+
+  client_addr:
+    host: 10.162.230.11:7658
+    # master: master.octopus.test:7865
+    # node1: node1.octopus.test:7865
+    # node2: node2.octopus.test:7865
+    # node3: node3.octopus.test:7865
 
   client_id:
-    - 0: host
+    host: 0
 
 # Parameter for tuning in Ceph cluster
 ceph-param: 
-  - osd_memory_target
-  - rbd_cache_size
-  - ms_tcp_prefetch_max_size
-  - ms_tcp_rcvbuf
-
+  - osd_memory_target:
+      type: int
+      min: 16
+      max: 16260060
+      step: 16
+      default: 4294967296
+  - rbd_cache_size:
+      type: int
+      min: 16
+      max: 16260060
+      step: 16
+      default: 33554432
+  - ms_tcp_prefetch_max_size:
+      type: int
+      min: 16
+      max: 16260060
+      step: 16
+      default: 4096
+  - ms_tcp_rcvbuf:
+      type: int
+      min: 16
+      max: 16260060
+      step: 16
+      default: 0
 
 opt:
   # Dashboard config
@@ -40,7 +66,7 @@ opt:
     username : admin
     passwd : admin
 
-  heartbeat : 5
+  heartbeat : 1
   # ML config section
   disable_same_thread_check: False
   delay_between-actions: 10
@@ -49,9 +75,9 @@ opt:
   enable_tuning: True
   disable_training: False
   observation_size: 4
-  num_actions: 4
+  num_actions: 9
   random_action_probability: 0.05
-  minibatch_size: 4
+  minibatch_size: 1
   ticks_per_observation: 1
   tick_len: 1
   tick_data_size: 4

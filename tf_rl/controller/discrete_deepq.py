@@ -134,13 +134,30 @@ class DiscreteDeepQ(object):
         summary_writer: tf.train.SummaryWriter
             writer to log metrics
         """
+        
+        '''
+        
+        observation_shape = (self.opt['observation_size'],), 
+        num_actions = self.opt['num_actions'], 
+        observation_to_actions = brain, 
+        optimizer = optimizer,
+        session = self.session, 
+        discount_rate=0.99,
+        start_random_rate=self.start_random_rate,
+        exploration_period=self.exploration_period,
+        random_action_probability=self.opt['random_action_probability'],
+        train_every_nth=1, 
+        summary_writer=journalist
+        
+        '''
+        
         # memorize arguments
         self.observation_shape         = observation_shape
         self.num_actions               = num_actions
 
-        self.start_random_rate         = start_random_rate
+        self.start_random_rate         = start_random_rate      # Beginning random rate
 
-        self.q_network                 = observation_to_actions
+        self.q_network                 = observation_to_actions # MLP
         self.optimizer                 = optimizer
         self.s                         = session
 
@@ -179,32 +196,48 @@ class DiscreteDeepQ(object):
         return tuple([batch_size] + list(self.observation_shape))
 
     def create_variables(self):
+        # Create copy for MLP
         self.target_q_network    = self.q_network.copy(scope="target_network")
 
         # FOR REGULAR ACTION SCORE COMPUTATION
         with tf.name_scope("taking_action"):
+            # Create placeholder for accepting array of float with size None, observation_shape
             self.observation        = tf.placeholder(tf.float32, self.observation_batch_shape(None), name="observation")
+            # create tensor with same size and content as hidden layers
             self.action_scores      = tf.identity(self.q_network(self.observation), name="action_scores")
             tf.summary.histogram("action_scores", self.action_scores)
-            self.predicted_actions  = tf.argmax(self.action_scores, dimension=1, name="predicted_actions")
-            logger.info(f'action score is: {self.q_network(self.observation)}')
+            # index of maximum value in MLP output with current observation feed into it
+            # self.predicted_actions  = tf.identity(self.action_scores, name="predicted_actions")
+            self.predicted_actions = tf.argmax(self.action_scores, dimension=1, name="predicted_actions")
             
         with tf.name_scope("estimating_future_rewards"):
             # FOR PREDICTING TARGET FUTURE REWARDS
+            # Create placeholder for next observation
             self.next_observation          = tf.placeholder(tf.float32, self.observation_batch_shape(None), name="next_observation")
+            # TODO: What is this?
             self.next_observation_mask     = tf.placeholder(tf.float32, (None,), name="next_observation_mask")
+            # TODO: What is this?
             self.next_action_scores        = tf.stop_gradient(self.target_q_network(self.next_observation))
             tf.summary.histogram("target_action_scores", self.next_action_scores)
+            # placeholder for rewards
             self.rewards                   = tf.placeholder(tf.float32, (None,), name="rewards")
+            # get maximum of output from hidden layer in [1,] dimension
             target_values                  = tf.reduce_max(self.next_action_scores, reduction_indices=[1,]) * self.next_observation_mask
+            # future rewards according to q value function value of rewards will be reduce in time
             self.future_rewards            = self.rewards + self.discount_rate * target_values
 
         with tf.name_scope("q_value_precition"):
             # FOR PREDICTION ERROR
+            # TODO: What is this?
             self.action_mask                = tf.placeholder(tf.float32, (None, self.num_actions), name="action_mask")
-            self.masked_action_scores       = tf.reduce_sum(self.action_scores * self.action_mask, reduction_indices=[1,])
+            #  (TODO: Why action_scores * action_mask) get sum of element 
+            # in tensor in [1,] dimension (sum because Q value is iterative process)
+            self.masked_action_scores       = tf.reduce_sum(self.action_scores*self.action_mask, reduction_indices=[1,])
+            # temporal difference in Q learning
             temp_diff                       = self.masked_action_scores - self.future_rewards
+            # Get mean squared prediction error (MSPE) 
             self.prediction_error           = tf.reduce_mean(tf.square(temp_diff))
+            
             gradients                       = self.optimizer.compute_gradients(self.prediction_error)
             for i, (grad, var) in enumerate(gradients):
                 if grad is not None:
@@ -229,6 +262,7 @@ class DiscreteDeepQ(object):
         tf.summary.scalar("prediction_error", self.prediction_error)
 
         self.summarize = tf.summary.merge_all()
+        # no operation
         self.no_op1    = tf.no_op()
 
     def action(self, observation) -> int:
@@ -242,19 +276,22 @@ class DiscreteDeepQ(object):
                                             self.exploration_period,
                                             self.start_random_rate,
                                             self.random_action_probability)
-        # TODO: Investigate action function and adapt to our version
+        
+        # Needs of exploration to prevent overfitting problem
         if random.random() < exploration_p:
-            rand_act = random.randint(0, self.num_actions - 1)
-            print('Randomly chose action {0}'.format(rand_act))
+            # rand_act = np.zeros(self.num_actions)
+            # for i in range(len(rand_act)):
+            #     # TODO: change random range to min and max of each parameter
+            #     rand_act[i] = random.randint(0, 20)
+            # rand_act = rand_act[np.newaxis,:]
+            rand_act = random.randint(0,self.num_actions-1)
+            logger.info('Randomly chose action {0}'.format(rand_act))
             return rand_act
+        # Run prediction to get action to tune
         else:
             # here self.s.run returns numpy.int64
-            # TODO: must change to array of 4
-            logger.info(f'predicted action is: {type(self.predicted_actions)}{self.predicted_actions}')
-            logger.info(f'obeservation in predicted action is: {observation[np.newaxis,:]}')
-            logger.info(f'new action is: {self.s.run(self.predicted_actions, {self.observation: observation[np.newaxis,:]})}')
-            act = int()
-            print('Chose calculated action {0}'.format(act))
+            act = int(self.s.run(self.predicted_actions, {self.observation: observation[np.newaxis,:]})[0])
+            logger.info('Chose calculated action {0}'.format(act))
             return act
 
     def exploration_completed(self):
@@ -280,33 +317,34 @@ class DiscreteDeepQ(object):
             for i, (state, action, reward, newstate, _) in enumerate(samples):
                 logger.info(f'samples: {state};{action};{reward};{newstate}')
                 states[i] = state
-                # action_mask[i] = 0
-                # action_mask[i][action] = 1
-                action_mask[i] = action      # TODO: action is interger here
+                action_mask[i] = 0
+                action_mask[i][action] = 1
+                # action_mask[i] = action      # TODO: action is interger here
                 rewards[i] = reward
                 if newstate is not None:
                     newstates[i] = newstate
-                    newstates_mask[i] = 1
+                    newstates_mask[i] = 1 
                 else:
                     newstates[i] = 0
                     newstates_mask[i] = 0
-
 
             calculate_summaries = self.iteration % 100 == 0 and \
                     self.summary_writer is not None
 
             cost, _, summary_str = self.s.run([
                 self.prediction_error,
+                # apply gradient with observation, next observation, action, and reward
                 self.train_op,
                 self.summarize if calculate_summaries else self.no_op1,
             ], {
+                # All placeholder is here
                 self.observation:            states,
                 self.next_observation:       newstates,
                 self.next_observation_mask:  newstates_mask,
                 self.action_mask:            action_mask,
                 self.rewards:                rewards,
             })
-
+            
             self.s.run(self.target_network_update)
 
             if calculate_summaries:

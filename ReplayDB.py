@@ -53,8 +53,7 @@ class ReplayDB:
         self.observation_size = self.tick_data_size * self.ticks_per_observation
 
         if 'client_id' in conf['node']:
-            for client in conf['node']['client_id']:
-                self.client_list.append(list(client.keys())[0])
+            self.client_list = list(conf['node']['client_id'].values())
             self.num_ma = len(self.client_list)
         else:
             self.client_list = None
@@ -91,10 +90,7 @@ class ReplayDB:
         # https://www.sqlite.org/optoverview.html#multi_index
         self.conn.close()
         del self.conn
-        self.connect_db()
         logger.info(f"Connected to database {self.conf['replaydb']['dbfile']}")
-        self.get_last_n_observation(2)
-        logger.info(f'test last n observation pass')
 
     def connect_db(self):
         dbfile = self.conf['replaydb']['dbfile']
@@ -108,7 +104,7 @@ class ReplayDB:
 
     def insert_perf(self, node_id: int, ts: int, data):
         c = self.conn.cursor()
-        c.arraysize = 2
+        c.arraysize = 3
         # If there's a missing entry before time, insert time as time-1
         # Checking table before insert
         c.execute('SELECT ts FROM perfs WHERE ts>=? AND ts<? ORDER BY ts', (ts-2, ts))
@@ -121,7 +117,7 @@ class ReplayDB:
 
         # Insert to table
         try:
-            c.execute('INSERT INTO perfs VALUES (?,?)', (ts, pickle.dumps(data)))
+            c.execute('INSERT INTO perfs VALUES (?,?,?)', (ts, node_id, pickle.dumps(data)))
             self.conn.commit()
         except sqlite3.IntegrityError as e:
             logger.warning('{type}: {msg}'.format(type=type(e).__name__, msg=str(e)))
@@ -135,7 +131,7 @@ class ReplayDB:
         try:
             c = self.conn.cursor()
             action_pickle = pickle.dumps(action)
-            c.execute('INSERT INTO actions VALUES (?,?,?)', (None,ts, action_pickle))
+            c.execute('INSERT INTO actions VALUES (?,?)', (ts, action_pickle))
             print(f'Stored action at {ts} in DB')
             self.conn.commit()
         except sqlite3.IntegrityError as e:
@@ -177,6 +173,7 @@ class ReplayDB:
         Refresh memcache by moving row index and retrieve new data from replay db
         """
         
+        self.connect_db()
         logger.info('Loading cache...')
         # Init cursor for database
         c = self.conn.cursor()
@@ -194,13 +191,28 @@ class ReplayDB:
                 (self.memcache_last_rowid,))
         f = c.fetchall()
         # For each row
+        previous = [0,0,0,0]
         for row in f:
             #set last row
+            if(row[4] == None):
+                continue
             self.memcache_last_rowid = max(self.memcache_last_rowid, row[0])
             # add id and pis from query data
             clientid, ts, pi_data = row[1], row[2], pickle.loads(row[3])
             # also for action
-            action = pickle.loads(row[4])
+            action_data = pickle.loads(row[4]) if row[4] != None else None
+            action = 0
+            if(previous == [0,0,0,0]):
+                action = 0
+            else:
+                for i,act in enumerate(zip(action_data, previous)):
+                    if(act[0] != act[1]):
+                        if(act[0] == None):
+                            action = -1
+                        action = i
+                        break
+            
+            previous = action_data
             # check client id
             if clientid not in self.client_list:
                 continue
@@ -215,6 +227,7 @@ class ReplayDB:
         logger.info('Finished loading {len} entries. Peak memory usage {size:,}.'.format(
             len=len(self.memcache) - preloading_cache_size,
             size=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss))
+        self.conn.close()
 
     # def get_last_time(self) -> int:
     #     """Return the last ts that has all PIs received
@@ -254,6 +267,7 @@ class ReplayDB:
             np.ndarray: [description]
         """
         
+        self.connect_db()
         # TODO: Understand this function
         c = self.conn.cursor()
         # TODO: Why +10
@@ -286,6 +300,7 @@ class ReplayDB:
             # numpy assignments also check that pi is in right shape
             result[ma_id_idx, ts_idx] = pickle.loads(pi)
 
+        self.conn.close()
         return result.reshape((self.observation_size,))
 
     def get_last_n_observation(self, n: int=1) -> List[np.ndarray]:
@@ -299,7 +314,7 @@ class ReplayDB:
         Returns:
             List[np.ndarray]: [description]
         """
-        
+        self.connect_db()
         result = []
         c = self.conn.cursor()
         # Get minimum ts and maximum ts from perfs table
@@ -312,6 +327,7 @@ class ReplayDB:
                 result.append(self.get_observation(max_ts))
                 # check if getting enough observation
                 if len(result) == n:
+                    self.conn.close()
                     return result
             except NotEnoughDataError:
                 if max_ts == min_ts:

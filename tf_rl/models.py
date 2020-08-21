@@ -17,6 +17,7 @@ The above copyright notice and this permission notice shall be included in all c
 or substantial portions of the Software.
 """
 
+from ascar_logging import logger
 import math
 import tensorflow.compat.v1 as tf
 
@@ -29,14 +30,17 @@ class Layer(object):
         if type(input_sizes) != list:
             input_sizes = [input_sizes]
 
+        # Specify input and output dimension of layer
         self.input_sizes = input_sizes
         self.output_size = output_size
         self.scope       = scope or "Layer"
 
         with tf.variable_scope(self.scope):
+            # Initialize weight of each input
             self.Ws = []
             for input_idx, input_size in enumerate(input_sizes):
                 W_name = "W_%d" % (input_idx,)
+                # random initial weight
                 W_initializer =  tf.random_uniform_initializer(
                         -1.0 / math.sqrt(input_size), 1.0 / math.sqrt(input_size))
                 W_var = tf.get_variable(W_name, (input_size, output_size), initializer=W_initializer)
@@ -67,9 +71,12 @@ class Layer(object):
 
 class MLP(object):
     def __init__(self, input_sizes, hiddens, nonlinearities, scope=None, given_layers=None):
+        # input and hidden layer dimension
         self.input_sizes = input_sizes
         self.hiddens = hiddens
+        # activation function
         self.input_nonlinearity, self.layer_nonlinearities = nonlinearities[0], nonlinearities[1:]
+        # Scope for using with tf variable
         self.scope = scope or "MLP"
 
         assert len(hiddens) == len(nonlinearities), \
@@ -84,14 +91,16 @@ class MLP(object):
                 self.layers = []
 
                 for l_idx, (h_from, h_to) in enumerate(zip(hiddens[:-1], hiddens[1:])):
-                    self.layers.append(Layer(h_from, h_to, scope="hidden_layer_%d" % (l_idx,)))
+                        self.layers.append(Layer(h_from, h_to, scope="hidden_layer_%d" % (l_idx,)))
 
     def __call__(self, xs):
         if type(xs) != list:
             xs = [xs]
         with tf.variable_scope(self.scope):
+            # Run tanh activation function of first layer
             hidden = self.input_nonlinearity(self.input_layer(xs))
             for layer, nonlinearity in zip(self.layers, self.layer_nonlinearities):
+                # In last layer run identity function
                 hidden = nonlinearity(layer(hidden))
             return hidden
 
@@ -106,14 +115,14 @@ class MLP(object):
         nonlinearities = [self.input_nonlinearity] + self.layer_nonlinearities
         given_layers = [self.input_layer.copy()] + [layer.copy() for layer in self.layers]
         return MLP(self.input_sizes, self.hiddens, nonlinearities, scope=scope,
-                   given_layers=given_layers)
+                given_layers=given_layers)
 
 
 class ConvLayer(object):
     def __init__(self, filter_H, filter_W,
-                       in_C, out_C,
-                       stride=(1,1),
-                       scope="Convolution"):
+                    in_C, out_C,
+                    stride=(1,1),
+                    scope="Convolution"):
         self.filter_H, self.filter_W = filter_H, filter_W
         self.in_C,     self.out_C    = in_C,     out_C
         self.stride                  = stride
@@ -123,7 +132,7 @@ class ConvLayer(object):
             input_size = filter_H * filter_W * in_C
             W_initializer =  tf.random_uniform_initializer(
                         -1.0 / math.sqrt(input_size),
-                         1.0 / math.sqrt(input_size))
+                        1.0 / math.sqrt(input_size))
             self.W = tf.get_variable('W',
                     (filter_H, filter_W, in_C, out_C),
                     initializer=W_initializer)

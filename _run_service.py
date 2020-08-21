@@ -25,13 +25,14 @@ def read_conf_file(conf_file):
 
 def import_controller_intf(classname, opt, conf):
 
-    # import controller_intf
+    # import controller_intf or MLDaemon
     classname_part = classname.split('.')
     m = importlib.import_module('.'.join(classname_part[:-1]))
     #import class
     m = getattr(m, classname_part[-1])
+    
     app = m(conf=conf, opt=opt)
-
+    
     return app
 
 def check_stale_lock(pidfile):
@@ -77,7 +78,6 @@ context = daemon.DaemonContext(
 
 def stop(signum, frame):
     app.stop()
-
 
 context.signal_map = {
     signal.SIGTERM: stop,

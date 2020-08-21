@@ -36,10 +36,10 @@ opt:
   enable_tuning: True
   disable_training: False
   observation_size: 82
-  num_actions: 4
+  num_actions: 9
   random_action_probability: 0.05f
   dbfile: /home/pkhantiviriya/APTRL/replaydb.sqlite
-  minibatch_size: 4
+  minibatch_size: 20
   ticks_per_observation: 1
   tick_len: 41
   tick_data_size: 1

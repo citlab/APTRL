@@ -52,7 +52,6 @@ The above copyright notice and this permission notice shall be included in all c
 or substantial portions of the Software.
 """
 
-from collectData.dbCheck import read_conf_file
 import gc
 import os
 import time
@@ -71,6 +70,7 @@ from ascar_logging import *
 from tf_rl.controller import DiscreteDeepQ
 from tf_rl.models import MLP
 from ReplayDB import *
+from ControllerIntf import ControllerInft
 
 __author__ = 'Yan Li'
 __copyright__ = 'Copyright (c) 2016, 2017 The Regents of the University of California. All rights reserved.'
@@ -85,6 +85,7 @@ class MLDaemon:
     :type conf: dict
     :type session: tf.Session
     """
+    
     controller = None                   # Tensorflow controller for MLP
     session = None                      # Tensorflow session
 
@@ -149,6 +150,14 @@ class MLDaemon:
         # Initialize database and retrieve data from database
         self.db = ReplayDB(self.opt, self.conf)
         self.db.refresh_memcache()
+        
+        # Store default action
+        default = []
+        for param in self.conf['ceph-param']:
+            val = list(param.values())[0]
+            default.append(val['default'])
+        self.last_action = default
+        
         # make temp file for storing tensorflow log
         self.LOG_DIR = tempfile.mkdtemp()
         logger.info(f"LOG_DIR is locate at {self.LOG_DIR}. To enable Tensorboard run 'tensorboard --logdir [LOG_DIR]'")
@@ -228,8 +237,7 @@ class MLDaemon:
 
                 if minibatch_size > 0:
                     # Check checkpoint time for every self.checkpoint_time
-                    logger.info(f'Time before checkpoint: {time.time() - last_checkpoint_time}')
-                    logger.info(f'Checkpoint time is: {self.checkpoint_time}')
+                    logger.info(f'Time before checkpoint: {self.checkpoint_time - (time.time() - last_checkpoint_time)}')
                     if time.time() - last_checkpoint_time > self.checkpoint_time:
                         # save controller checkpoint
                         cp_path = os.path.join(self.save_path, 'checkpoint_' + time.strftime('%Y-%m-%d_%H-%M-%S'))
@@ -272,10 +280,10 @@ class MLDaemon:
                             time.sleep(sleep_time)
                         
                         # Do action step
-                        # TODO: Called last_n_observation here
-                        self._do_action_step()
+                        ts = int(time.time())
+                        self._do_action_step(ts)
                         # Update action to current time
-                        last_action_second = int(time.time())
+                        last_action_second = ts
                     else:
                         logger.debug('Tuning disabled.')
                         # Check for new data every 200 steps to reduce checking overhead
@@ -325,7 +333,7 @@ class MLDaemon:
             # Get training batch from memcache in replay database
             mini_batch = self.get_minibatch()
             if mini_batch:
-                logger.debug(f'Retrieve batch size: {len(mini_batch)}')
+                logger.info(f'Retrieve batch size: {len(mini_batch)}')
                 return len(mini_batch), self.controller.training_step(mini_batch)
             else:
                 return 0, None
@@ -333,7 +341,7 @@ class MLDaemon:
             raise RuntimeError('Training is disabled')
 
 
-    def _do_action_step(self):
+    def _do_action_step(self, ts):
         """ Do an action step
 
         This function is NOT thread-safe and can only be called within the worker thread.
@@ -345,13 +353,10 @@ class MLDaemon:
             raise RuntimeError('Tuning is disabled')
 
         try:
-            self.db.conn.close()
-            self.db.connect_db()
             # get new observation
             new_observation = self.observe()
             # collect reward
             reward = self.collect_reward()
-            pass
         except BaseException as e:
             logger.info('{0}. Skipped taking action.'.format(str(e)))
             traceback.print_exc()
@@ -365,12 +370,10 @@ class MLDaemon:
         # get action from new observation
         self.new_action = self.controller.action(new_observation)
         logger.info(f'Action is: {type(self.new_action)}{self.new_action}')
+        
         # Perform action
-        # TODO: Implementation perform_action fucntion
-        self.perform_action(self.new_action)
+        self.perform_action(self.new_action, ts)
 
-        # Update last action to current one
-        self.last_action = self.new_action
         # Update last observation to current one
         self.last_observation = new_observation
 
@@ -422,7 +425,9 @@ class MLDaemon:
                     # append data into result as tuple
                     ts = self.db.memcache[i][0]
                     action = self.db.memcache[i][1]
-                    result.append((observ, action, reward, observ_next, ts))
+                    # Prevent getting observation without action append to training batch
+                    if(action != -1):
+                        result.append((observ, action, reward, observ_next, ts))
 
                     # TODO: should I use this?
                     good_idx.add(ts)
@@ -620,38 +625,44 @@ class MLDaemon:
                 result += latency_r + latency_w
         return result
     
-    # def perform_action(self, action_id: int):
-    #     """Send the new action to IntfDaemon
+    def perform_action(self, action_id, ts):
+        """Send the new action to IntfDaemon
 
-    #     Args:
-    #         action_id (int): [description]
-    #     """
-    #     assert 0 <= action_id < self.num_actions
+        Args:
+            action: An action predicted by discrete_deepq
+        """
+        # logger.info(f'{action}')
+        # assert action.shape == tuple([1,4])
+        assert 0 <= action_id < self.opt['num_actions']
+            
+        # TODO: check increase, decrease or nothing  
+        # TODO: store action in replayDB and then broadcast param to Storage
+        
+        if action_id > 0:
+            param_id = (action_id-1) // 2
+            param_valu = list(self.conf['ceph-param'][param_id].values())[0]
+            param_type = param_valu['type']
+            min_val = param_valu['min']
+            max_val = param_valu['max']
+            step = param_valu['step']
+            if action_id % 2 == 0:
+                # minus step
+                if self.last_action[param_id] - step < min_val:
+                    # invalid move
+                    pass
+                else:
+                    self.last_action[param_id] -= step
+            else:
+                # plus step
+                if self.last_action[param_id] + step > max_val:
+                    # invalid move
+                    pass
+                else:
+                    self.last_action[param_id] += step
 
-    #     if not self.cpvs:
-    #         # use the default value
-    #         self.cpvs = [x[1] for x in self.opt['cpvs']]
-
-    #     if action_id > 0:
-    #         cpv_id = (action_id - 1) // 2
-    #         lower_range = self.opt['cpvs'][cpv_id][2]
-    #         upper_range = self.opt['cpvs'][cpv_id][3]
-    #         step = self.opt['cpvs'][cpv_id][4]
-    #         if action_id % 2 == 0:
-    #             # minus step
-    #             if self.cpvs[cpv_id] < lower_range + step:
-    #                 # invalid move, do nothing
-    #                 pass
-    #             else:
-    #                 self.cpvs[cpv_id] -= step
-    #         else:
-    #             # plus 1
-    #             if self.cpvs[cpv_id] > upper_range - step:
-    #                 # invalid move, do nothing
-    #                 pass
-    #             else:
-    #                 self.cpvs[cpv_id] += step
-
-    #     # Broadcast action must begin with action_id, which will be saved by
-    #     # IntfDaemon to the DB.
-    #     ControllerIntf.broadcast_action([action_id] + self.cpvs)
+        self.db.connect_db()
+        self.db.insert_action(ts, self.last_action)
+        self.db.conn.close()
+        # # Broadcast action must begin with action_id, which will be saved by
+        # # IntfDaemon to the DB.
+        ControllerInft.broadcastAction(self.last_action, ts, self.conf, self.opt)
