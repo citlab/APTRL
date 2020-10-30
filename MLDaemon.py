@@ -72,6 +72,8 @@ from tf_rl.models import MLP
 from ReplayDB import *
 from ControllerIntf import ControllerInft
 
+import sqlite3
+
 __author__ = 'Yan Li'
 __copyright__ = 'Copyright (c) 2016, 2017 The Regents of the University of California. All rights reserved.'
 
@@ -106,6 +108,7 @@ class MLDaemon:
 
     last_observation = None             # last observation used in training process
     last_action = None                  # last set of parameter configurations
+    last_step = None                    # last set of parameter step size
     new_action = None                   # new action that will be broadcast to storage system
     save_path = None                    # save path of model and log file
 
@@ -153,10 +156,13 @@ class MLDaemon:
         
         # Store default action
         default = []
+        default_step = []
         for param in self.conf['ceph-param']:
             val = list(param.values())[0]
             default.append(val['default'])
+            default_step.append(val['step'])
         self.last_action = default
+        self.last_step = default_step
         
         # make temp file for storing tensorflow log
         self.LOG_DIR = tempfile.mkdtemp()
@@ -209,7 +215,7 @@ class MLDaemon:
                                             self.session, discount_rate=0.99, start_random_rate=self.start_random_rate,
                                             exploration_period=self.exploration_period,
                                             random_action_probability=self.opt['random_action_probability'],
-                                            train_every_nth=1, summary_writer=journalist)
+                                            train_every_nth=1, summary_writer=journalist, k_action=int(self.opt['k_val']))
 
             self.session.run(tf.initialize_all_variables())
             self.session.run(self.controller.target_network_update)
@@ -369,8 +375,6 @@ class MLDaemon:
             pass
         # get action from new observation
         self.new_action = self.controller.action(new_observation)
-        logger.info(f'Action is: {type(self.new_action)}{self.new_action}')
-        
         # Perform action
         self.perform_action(self.new_action, ts)
 
@@ -426,7 +430,7 @@ class MLDaemon:
                     ts = self.db.memcache[i][0]
                     action = self.db.memcache[i][1]
                     # Prevent getting observation without action append to training batch
-                    if(action != -1):
+                    if(action != [-1]):
                         result.append((observ, action, reward, observ_next, ts))
 
                     # TODO: should I use this?
@@ -563,8 +567,8 @@ class MLDaemon:
             float: total throughput
         """
         # Get number of client
-        if 'client_id' in self.opt:
-            client_num = len(self.opt['client_id'])
+        if 'client_id' in self.conf['node']:
+            client_num = len(self.conf['node']['client_id'])
         else:
             client_num = 1
             
@@ -625,7 +629,7 @@ class MLDaemon:
                 result += latency_r + latency_w
         return result
     
-    def perform_action(self, action_id, ts):
+    def perform_action(self, actions, ts):
         """Send the new action to IntfDaemon
 
         Args:
@@ -633,35 +637,43 @@ class MLDaemon:
         """
         # logger.info(f'{action}')
         # assert action.shape == tuple([1,4])
-        assert 0 <= action_id < self.opt['num_actions']
+        # assert 0 <= action_id < self.opt['num_actions']
             
         # TODO: check increase, decrease or nothing  
         # TODO: store action in replayDB and then broadcast param to Storage
-        
-        if action_id > 0:
-            param_id = (action_id-1) // 2
-            param_valu = list(self.conf['ceph-param'][param_id].values())[0]
-            param_type = param_valu['type']
-            min_val = param_valu['min']
-            max_val = param_valu['max']
-            step = param_valu['step']
-            if action_id % 2 == 0:
-                # minus step
-                if self.last_action[param_id] - step < min_val:
-                    # invalid move
-                    pass
+        for action_id in actions:
+            if action_id > 0:
+                param_id = (action_id-1) // 4
+                param_valu = list(self.conf['ceph-param'][param_id].values())[0]
+                param_type = param_valu['type']
+                min_val = param_valu['min']
+                max_val = param_valu['max']
+                step_change = self.opt['stepsize_change']
+                if action_id % 2 == 0:
+                    # minus step
+                    if self.last_action[param_id] - self.last_step[param_id] < min_val:
+                        # invalid move
+                        pass
+                    else:
+                        self.last_step[param_id] -= step_change
+                        self.last_action[param_id] -= self.last_step[param_id]
                 else:
-                    self.last_action[param_id] -= step
-            else:
-                # plus step
-                if self.last_action[param_id] + step > max_val:
-                    # invalid move
-                    pass
-                else:
-                    self.last_action[param_id] += step
+                    # plus step
+                    if self.last_action[param_id] + self.last_step[param_id] > max_val:
+                        # invalid move
+                        pass
+                    else:
+                        self.last_step[param_id] += step_change
+                        self.last_action[param_id] += self.last_step[param_id]
+                    
 
         self.db.connect_db()
-        self.db.insert_action(ts, self.last_action)
+        for t in (ts-self.delay_between_actions, ts):
+            try:
+                logger.info(f'insert action at: {t}')
+                self.db.insert_action(t, self.last_action)
+            except sqlite3.IntegrityError as e:
+                pass
         self.db.conn.close()
         # # Broadcast action must begin with action_id, which will be saved by
         # # IntfDaemon to the DB.

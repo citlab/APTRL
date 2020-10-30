@@ -1,14 +1,14 @@
 # Log configuration
 log:
   dqldaemon_debugging_level: 1
-  log_location: /home/pkhantiviriya/APTRL/log/
-  DQLDaemon.DQLDaemon_logfile: /home/pkhantiviriya/APTRL/log/dql_log.log
-  ControllerIntf.ControllerInft_logfile: /home/pkhantiviriya/APTRL/log/controller_log.log
-  MLDaemon.MLDaemon_logfile: /home/pkhantiviriya/APTRL/log/ml_log.log
+  log_location: /home/pkhantiviriya/myAPTRL/log/
+  DQLDaemon.DQLDaemon_logfile: /home/pkhantiviriya/myAPTRL/log/dql_log.log
+  ControllerIntf.ControllerInft_logfile: /home/pkhantiviriya/myAPTRL/log/controller_log.log
+  MLDaemon.MLDaemon_logfile: /home/pkhantiviriya/myAPTRL/log/ml_log.log
 
 # Replay database configuration
 replaydb:
-  dbfile: /home/pkhantiviriya/APTRL/replaydb.sqlite
+  dbfile: /home/pkhantiviriya/myAPTRL/replaydb.sqlite
 
 # Client&Server nodes
 node:
@@ -22,45 +22,49 @@ node:
     master: 1
 
   client_addr:
-    host: 10.162.230.11:7658
+    node1: 10.162.230.11:7658
+    node2: 10.162.230.15:7658
+    node3: 10.162.230.18:7658
     # master: master.octopus.test:7865
     # node1: node1.octopus.test:7865
     # node2: node2.octopus.test:7865
     # node3: node3.octopus.test:7865
 
   client_id:
-    host: 0
+    node1: 0
+    node2: 1
+    node3: 2
 
 # Parameter for tuning in Ceph cluster
 ceph-param: 
   - osd_memory_target:
       type: int
-      min: 16
-      max: 16260060
-      step: 16
+      min: 939524096
+      max: 1275280000
+      step: 128
       default: 4294967296
   - rbd_cache_size:
       type: int
       min: 16
-      max: 16260060
-      step: 16
+      max: 1275280000
+      step: 128
       default: 33554432
   - ms_tcp_prefetch_max_size:
       type: int
       min: 16
-      max: 16260060
+      max: 1275280000
       step: 16
       default: 4096
   - ms_tcp_rcvbuf:
       type: int
-      min: 16
-      max: 16260060
+      min: 0
+      max: 127528000
       step: 16
       default: 0
 
 opt:
   # Dashboard config
-  dashboard_addr : 10.20.16.200
+  dashboard_addr : blueshark-2.ses.suse.de
   dashboard_port : 8443
   auth: 
     username : admin
@@ -69,19 +73,26 @@ opt:
   heartbeat : 1
   # ML config section
   disable_same_thread_check: False
-  delay_between-actions: 10
-  exploration_period: 3000
+  delay_between-actions: 1
+  exploration_period: 20000
   start_random_rate: 0.5
   enable_tuning: True
   disable_training: False
-  observation_size: 4
-  num_actions: 9
+  observation_size: 12
+  # Must change number when reduce or increase size of params
+  num_actions: 17
   random_action_probability: 0.05
   minibatch_size: 1
   ticks_per_observation: 1
   tick_len: 1
-  tick_data_size: 4
+  # number of clients * number of parameters
+  tick_data_size: 12
   missing_entry_tolerance: 10
   checkpoint_time: 1800
   obd_per_client_ma: 1
   pi_per_client_obd: 4
+
+  # Step size param
+  stepsize_change: 4
+  # K largest output value !must not exceed the number of parameter
+  k_val: 1

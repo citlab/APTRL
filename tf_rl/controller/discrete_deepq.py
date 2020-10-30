@@ -77,7 +77,8 @@ class DiscreteDeepQ(object):
                     discount_rate=0.95,
                     start_random_rate = 0.5092,
                     target_network_update_rate=0.01,
-                    summary_writer=None):
+                    summary_writer=None,
+                    k_action=1):
         """Initialized the Deepq object.
 
         Based on:
@@ -175,6 +176,8 @@ class DiscreteDeepQ(object):
         self.summary_writer = summary_writer
 
         self.number_of_times_train_called = 0
+        
+        self.k_action = k_action
 
         self.create_variables()
 
@@ -208,7 +211,7 @@ class DiscreteDeepQ(object):
             tf.summary.histogram("action_scores", self.action_scores)
             # index of maximum value in MLP output with current observation feed into it
             # self.predicted_actions  = tf.identity(self.action_scores, name="predicted_actions")
-            self.predicted_actions = tf.argmax(self.action_scores, dimension=1, name="predicted_actions")
+            self.predicted_actions = tf.identity(self.action_scores, name="predicted_actions")
             
         with tf.name_scope("estimating_future_rewards"):
             # FOR PREDICTING TARGET FUTURE REWARDS
@@ -277,6 +280,7 @@ class DiscreteDeepQ(object):
                                             self.start_random_rate,
                                             self.random_action_probability)
         
+        # logger.info(f'action_scores:{self.action_scores}')
         # Needs of exploration to prevent overfitting problem
         if random.random() < exploration_p:
             # rand_act = np.zeros(self.num_actions)
@@ -284,15 +288,20 @@ class DiscreteDeepQ(object):
             #     # TODO: change random range to min and max of each parameter
             #     rand_act[i] = random.randint(0, 20)
             # rand_act = rand_act[np.newaxis,:]
-            rand_act = random.randint(0,self.num_actions-1)
+            
+            # Random action with k size
+            rand_act = random.sample(range(self.num_actions), self.k_action)
+            
             logger.info('Randomly chose action {0}'.format(rand_act))
             return rand_act
         # Run prediction to get action to tune
         else:
             # here self.s.run returns numpy.int64
-            act = int(self.s.run(self.predicted_actions, {self.observation: observation[np.newaxis,:]})[0])
-            logger.info('Chose calculated action {0}'.format(act))
-            return act
+            act = self.s.run(self.predicted_actions, {self.observation: observation[np.newaxis,:]})
+            k = -1*abs(self.k_action)
+            k_act = act.argsort()[0][k:][::-1]
+            logger.info('Choose calculated action {0}'.format(k_act))
+            return k_act
 
     def exploration_completed(self):
         return min(float(self.actions_executed_so_far) / self.exploration_period, 1.0)
@@ -318,7 +327,8 @@ class DiscreteDeepQ(object):
                 logger.info(f'samples: {state};{action};{reward};{newstate}')
                 states[i] = state
                 action_mask[i] = 0
-                action_mask[i][action] = 1
+                for action_id in action:
+                    action_mask[i][action_id] = 1
                 # action_mask[i] = action      # TODO: action is interger here
                 rewards[i] = reward
                 if newstate is not None:

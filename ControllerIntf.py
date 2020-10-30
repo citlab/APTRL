@@ -11,6 +11,7 @@ import copy
 import requests
 
 import socket
+import paramiko
 
 from ceph_agent.ApiRequest import *
 from ReplayDB import *
@@ -111,11 +112,11 @@ class ControllerInft:
         while(True):
             # flush log
             flush_log()
-
+            log_time = int(time.time())
             for i,client in enumerate(client_addr):
                 # split address and port
                 addr,port = client.split(':')
-                
+
                 try:
                     # create connection with each client
                     conn = self.createConnection(addr,port)
@@ -126,7 +127,6 @@ class ControllerInft:
                     pi_data = pickle.loads(conn.recv(1024))
                     logger.info(f'Received {pi_data}')
                     
-                    log_time = int(time.time())
                     if(int(log_time) not in self.log_times):
                         self.log_times.append(log_time)
                     # store PIs in DB (node_id, time, data)
@@ -134,10 +134,10 @@ class ControllerInft:
                     db.insert_perf(self.conf['node']['client_id'][node_name], log_time, pi_data)
                     # Close connection with client
                     conn.close()
-                    sleep(self.opt['heartbeat'])
+                    # sleep(self.opt['heartbeat'])
                 except ConnectionRefusedError:
                     logger.info(f'address {addr} is not available')
-
+            sleep(self.opt['heartbeat'])
             # TODO: Read this and implement necessary line
 
             # Check health for tuning system, storage and client
@@ -166,24 +166,30 @@ class ControllerInft:
         addr = opt['dashboard_addr']
         port = opt['dashboard_port']
 
-        # Checking for certificate file for dashboard API
-        cert = False
-        if('use_cert' in opt.keys()):
-            cert = opt['cert_file'] if opt['use_cert'] else False
+        # # Checking for certificate file for dashboard API
+        # cert = False
+        # if('use_cert' in opt.keys()):
+        #     cert = opt['cert_file'] if opt['use_cert'] else False
 
-        # Ceph implementation is here
-        api = ApiRequest(addr,port, cert)
+        # # Ceph implementation is here
+        # api = ApiRequest(addr,port, cert)
         
-        # Checking API
-        allPath = api.paths()
-        if(allPath == None):
-            raise Exception('Cannot reached Dashboard API')
+        # # Checking API
+        # allPath = api.paths()
+        # if(allPath == None):
+        #     raise Exception('Cannot reached Dashboard API')
         
-        # Do Authentication for Dashboard
-        api.auth(opt['auth']['username'], opt['auth']['passwd'])
-        
+        # # Do Authentication for Dashboard
+        # api.auth(opt['auth']['username'], opt['auth']['passwd'])
         for idx, param in enumerate(conf['ceph-param']):
-            api.clusterConfig(list(param.keys())[0], str(action[idx]), section='global')
+            
+            ssh = paramiko.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            ssh.connect('10.162.230.51', username='root', password='hammer23')
+            ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(f'ceph config set global {list(param.keys())[0]} {str(action[idx])}')
+            ssh.close()
+            
+            # api.clusterConfig(list(param.keys())[0], str(action[idx]), section='global')
     
     def stop(self):
         pass

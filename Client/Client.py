@@ -13,15 +13,18 @@ __autor__ = 'Puriwat Khantiviriya'
 class Client:
     
     # Service addr and port
-    serv_addr = '127.0.0.1'
+    serv_addr = '10.162.230.11'
     port = 7658
     
     # command for running fio on client side
     cmd = ['/usr/local/bin/fio', 
-        '--filename=/home/pkhantiviriya/rbd0/deleteme',
+        '--filename=/root/APTRL/deleteme',
         '--direct=1', '--rw=write', '--bs=4k', 
-        '--size=500M', '--iodepth=16', '--name=write4k',
+        '--size=100G', '--iodepth=16', '--name=write4k',
         '--output-format=terse', '--status-interval=1']
+    
+    rtow = ['--rw=readwrite', 'rwmixread=1']
+    
     
     out_col = ['terse_version_3', 'fio_version', 'jobname', 'groupid', 'error',
         'read_kb', 'read_bandwidth', 'read_iops', 'read_runtime_ms',
@@ -86,8 +89,8 @@ class Client:
                     print(pi_arr)
                     conn.sendall(pickle.dumps(pi_arr))
                 conn.close()
-            except Exception:
-                print('data not received')
+            except Exception as e:
+                print(f'{e} data not received')
                 
             # except EOFError:
             #     conn,addr = soc.accept()
@@ -111,6 +114,8 @@ class Client:
         # if(proc.poll() == None):
         pi_data = line.split(';')
         pi_arr = []
+        
+        print(line)
         
         pi_arr.append(pi_data[self.out_col.index('read_kb')])
         pi_arr.append(pi_data[self.out_col.index('write_kb')])

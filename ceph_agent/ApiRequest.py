@@ -28,7 +28,7 @@ class ApiRequest:
             token = r.json()['token']
             self.header['Authorization'] = 'Bearer ' + token
         else:
-            raise r.raise_for_status()
+            print(r.text)
 
 
     """

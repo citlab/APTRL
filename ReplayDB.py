@@ -194,23 +194,29 @@ class ReplayDB:
         previous = [0,0,0,0]
         for row in f:
             #set last row
-            if(row[4] == None):
-                continue
+            # if(row[4] == None):
+            #     continue
             self.memcache_last_rowid = max(self.memcache_last_rowid, row[0])
             # add id and pis from query data
             clientid, ts, pi_data = row[1], row[2], pickle.loads(row[3])
             # also for action
-            action_data = pickle.loads(row[4]) if row[4] != None else None
-            action = 0
+            action_data = pickle.loads(row[4]) if row[4] != None else [None,None,None,None]
+            action = []
+            # First row
             if(previous == [0,0,0,0]):
-                action = 0
+                pass
+            # Other row
             else:
                 for i,act in enumerate(zip(action_data, previous)):
                     if(act[0] != act[1]):
                         if(act[0] == None):
-                            action = -1
-                        action = i
-                        break
+                            action.append(-1)
+                        else:
+                            # Set action to param id
+                            action.append(i)
+                        # break
+                    # else:
+                    #     action.append(0)
             
             previous = action_data
             # check client id
