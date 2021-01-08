@@ -421,9 +421,12 @@ class MLDaemon:
                     # get observation and next observation from sample index
                     observ = self.get_observation_by_cache_idx(i)
                     observ_next = self.get_next_observation_by_cache_idx(i)
-
                     # calculate reward from observation of current step and next step
-                    reward = self._calc_total_throughput(observ_next) - self._calc_total_throughput(observ)
+                    if(self._calc_total_latency(observ_next)-self._calc_total_latency(observ) != 0):
+                        total_lat = (1/self._calc_total_latency(observ_next)-self._calc_total_latency(observ))
+                    else:
+                        total_lat = 0
+                    reward = (self._calc_total_throughput(observ_next) - self._calc_total_throughput(observ)) + total_lat
                     
                     # The final ts is only used in test cases
                     # append data into result as tuple
@@ -479,7 +482,12 @@ class MLDaemon:
             float: reward from current total thoughput and previous total throughput
         """
         observ, prev_observ = self.db.get_last_n_observation(2)
-        return self._calc_total_throughput(observ) - self._calc_total_throughput(prev_observ)
+        if(self._calc_total_latency(observ)-self._calc_total_latency(prev_observ) != 0):
+            total_lat = (1/self._calc_total_latency(observ)-self._calc_total_latency(prev_observ))
+        else:
+            total_lat = 0
+
+        return (self._calc_total_throughput(observ) - self._calc_total_throughput(prev_observ)) + total_lat
 
     def get_observation_by_cache_idx(self, idx: int) -> np.ndarray:
         """ Get observation from index
@@ -548,10 +556,12 @@ class MLDaemon:
         assert 0 <= idx < len(self.db.memcache)
         # if index is the last tick
         if idx == len(self.db.memcache) - 1:
+            logger.info('got until here')
             raise NotEnoughDataError
-        # Check if next tick is continuous
-        if self.db.memcache[idx][0] + self.opt['tick_len'] != self.db.memcache[idx + 1][0]:
-            raise NotEnoughDataError
+        # # Check if next tick is continuous
+        # if self.db.memcache[idx][0] + self.opt['tick_len'] != self.db.memcache[idx + 1][0]:
+        #     logger.info('or sth here')
+        #     raise NotEnoughDataError
         # Check observation at next tick
         return self.get_observation_by_cache_idx(idx + 1)
     
@@ -605,8 +615,8 @@ class MLDaemon:
             float: total throughput
         """
         # Get number of client
-        if 'client_id' in self.opt:
-            client_num = len(self.opt['client_id'])
+        if 'client_id' in self.conf['node']:
+            client_num = len(self.conf['node']['client_id'])
         else:
             client_num = 1
             
@@ -618,14 +628,14 @@ class MLDaemon:
         # Loop through each client
         for client_idx in range(client_num):
             # Loop through each server
-            for osc in range(len(self.opt['server_id'])):
+            for osc in range(len(self.conf['node']['server_id'])):
                 # Get latency read and write indicies
                 latency_r_ix  = osc * (self.opt['pi_per_client_obd']) + 2
                 latency_w_ix = osc * (self.opt['pi_per_client_obd']) + 3 
 
                 # Get latency read and write from observation
-                latency_r  = observ[client_num, self.ticks_per_observation-1, latency_r_ix]
-                latency_w = observ[client_num, self.ticks_per_observation-1, latency_w_ix]
+                latency_r  = observ[client_idx, self.ticks_per_observation-1, latency_r_ix]
+                latency_w = observ[client_idx, self.ticks_per_observation-1, latency_w_ix]
                 result += latency_r + latency_w
         return result
     

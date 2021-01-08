@@ -292,16 +292,54 @@ class DiscreteDeepQ(object):
             # Random action with k size
             rand_act = random.sample(range(self.num_actions), self.k_action)
             
+            if(rand_act[0] == 0):
+                rand_act = [0]
+            elif(rand_act[0]//4==rand_act[1]//4):
+                rand_act = [rand_act[0]]
+            elif 0 in rand_act:
+                rand_act.remove(0)
+                
             logger.info('Randomly chose action {0}'.format(rand_act))
             return rand_act
+            
         # Run prediction to get action to tune
         else:
             # here self.s.run returns numpy.int64
-            act = self.s.run(self.predicted_actions, {self.observation: observation[np.newaxis,:]})
-            k = -1*abs(self.k_action)
-            k_act = act.argsort()[0][k:][::-1]
-            logger.info('Choose calculated action {0}'.format(k_act))
-            return k_act
+            act = self.s.run(self.predicted_actions, {self.observation: observation[np.newaxis,:]})[0]
+            # Create list containing maximum output value 
+            # from each parameter including 0 (Do nothing)
+            # k_act = [act[0]]
+            # k_act.extend([max(act[i:i+4]) for i in range(1,self.num_actions,4)])
+            reshape_act = act[1:].reshape((4,4))
+            maxreshape_act = np.amax(reshape_act, axis=1)
+            act_maxidx = np.argmax(reshape_act, axis=1)
+            for i in range(0,act_maxidx.size):
+                act_maxidx[i] = ((4*i)+act_maxidx[i])+1
+            # reshape_act = reshape_act.flatten()
+            k_act = np.insert(maxreshape_act, 0, act[0])
+            idx_act = np.insert(act_maxidx, 0, 0)
+            
+            # Sort in decending order and select only k element
+            act_ids = []
+            if(self.k_action != 1):
+                sorted_act = np.argsort(k_act)[::-1][:self.k_action]
+                for i in sorted_act:
+                    act_ids.append(idx_act[i])
+            else:
+                act_ids.append(idx_act[0])
+            # sort_k_act = np.sort(np.array(k_act))[::-1][:k]
+            # argsort_k_act = np.argsort(np.array(act))[::-1][k]
+            # # get id of each action
+            # act_ids = []
+            # for act_val in sort_k_act:
+            #     act_ids.append(int(np.where(act == act_val)[0]))
+            logger.info(f'act_ids: {act_ids}')
+            if(act_ids[0] == [0]):
+                act_ids = [0]
+            elif 0 in act_ids:
+                act_ids.remove(0)
+            logger.info('Choose calculated action {0}'.format(act_ids))
+            return act_ids
 
     def exploration_completed(self):
         return min(float(self.actions_executed_so_far) / self.exploration_period, 1.0)

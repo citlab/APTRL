@@ -22,12 +22,12 @@ node:
     master: 1
 
   client_addr:
-    node1: 10.162.230.11:7658
-    node2: 10.162.230.15:7658
-    node3: 10.162.230.18:7658
+    node1: loewe.arch.suse.de:7657
+    node2: loewe.arch.suse.de:7658
+    node3: loewe.arch.suse.de:7659 
     # master: master.octopus.test:7865
     # node1: node1.octopus.test:7865
-    # node2: node2.octopus.test:7865
+    # node2: node2.octopus.test:7865  
     # node3: node3.octopus.test:7865
 
   client_id:
@@ -40,31 +40,31 @@ ceph-param:
   - osd_memory_target:
       type: int
       min: 939524096
-      max: 1275280000
+      max: 134217728000
       step: 128
       default: 4294967296
   - rbd_cache_size:
       type: int
       min: 16
-      max: 1275280000
+      max: 134217728000
       step: 128
       default: 33554432
   - ms_tcp_prefetch_max_size:
       type: int
       min: 16
-      max: 1275280000
+      max: 134217728000
       step: 16
       default: 4096
   - ms_tcp_rcvbuf:
       type: int
       min: 0
-      max: 127528000
+      max: 134217728000
       step: 16
       default: 0
 
 opt:
   # Dashboard config
-  dashboard_addr : blueshark-2.ses.suse.de
+  dashboard_addr : loewe.arch.suse.de
   dashboard_port : 8443
   auth: 
     username : admin
@@ -95,4 +95,4 @@ opt:
   # Step size param
   stepsize_change: 4
   # K largest output value !must not exceed the number of parameter
-  k_val: 1
+  k_val: 2

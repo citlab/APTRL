@@ -137,11 +137,19 @@ class ControllerInft:
                     # sleep(self.opt['heartbeat'])
                 except ConnectionRefusedError:
                     logger.info(f'address {addr} is not available')
-            sleep(self.opt['heartbeat'])
+                except ConnectionResetError:
+                    logger.info(f'address {addr} is reset by peer')
+                except EOFError:
+                    logger.info(f'address {addr} send too much input')
+                except socket.timeout:
+                    logger.info(f'address {addr} not responding')
+                except socket.gaierror:
+                    logger.info(f'address {addr} not known or cannnot be access')
+            # sleep(self.opt['heartbeat'])
             # TODO: Read this and implement necessary line
 
             # Check health for tuning system, storage and client
-            self._health_check()
+            # self._health_check()
 
             # check time with heartbeat if less than 0.9 seconds
             # if(time.time() - self.heartbeat >= 5):
@@ -181,14 +189,16 @@ class ControllerInft:
         
         # # Do Authentication for Dashboard
         # api.auth(opt['auth']['username'], opt['auth']['passwd'])
-        for idx, param in enumerate(conf['ceph-param']):
-            
-            ssh = paramiko.SSHClient()
-            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect('10.162.230.51', username='root', password='hammer23')
-            ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(f'ceph config set global {list(param.keys())[0]} {str(action[idx])}')
-            ssh.close()
-            
+        try:
+            for idx, param in enumerate(conf['ceph-param']):
+                logger.info(f'Update {list(param.keys())[0]} with value {str(action[idx])}')
+                ssh = paramiko.SSHClient()
+                ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                ssh.connect('loewe.arch.suse.de', username='root', port=2789)
+                ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(f'ceph config set global {list(param.keys())[0]} {str(action[idx])}')
+                ssh.close()
+        except Exception as e:    
+            logger.info(f'Cannot connect to storage. Parameter won\'t update')
             # api.clusterConfig(list(param.keys())[0], str(action[idx]), section='global')
     
     def stop(self):

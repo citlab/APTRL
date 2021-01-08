@@ -182,6 +182,12 @@ class ReplayDB:
         # if memcache is not initialize yet
         if not self.memcache:
             self.memcache = list()
+        else:
+            for cache in self.memcache:
+                if cache[1] == []:
+                    self.memcache.remove(cache)
+                elif cache[1] == [None,None,None,None]:
+                    self.memcache.remove(cache)
         # cache size
         preloading_cache_size = len(self.memcache)
         # Getting all data from perf and actions
@@ -209,8 +215,9 @@ class ReplayDB:
             else:
                 for i,act in enumerate(zip(action_data, previous)):
                     if(act[0] != act[1]):
-                        if(act[0] == None):
-                            action.append(-1)
+                        if(act[1] == None):
+                            # action.append(-1)
+                            pass
                         else:
                             # Set action to param id
                             action.append(i)
