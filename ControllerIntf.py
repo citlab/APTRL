@@ -124,7 +124,7 @@ class ControllerInft:
                     
                     # requesting for lastest PI
                     conn.sendall(b'REQ_PI')
-                    pi_data = pickle.loads(conn.recv(1024))
+                    pi_data = pickle.loads(conn.recv(4096))
                     logger.info(f'Received {pi_data}')
                     
                     if(int(log_time) not in self.log_times):

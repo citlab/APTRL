@@ -3,29 +3,28 @@
 '''Client'''
 
 # Import some necessary modules
+import asyncio          #Running asynchronized socket
+import nest_asyncio
+nest_asyncio.apply()
+
 import socket
-import subprocess
+import subprocess           # Running command
 import json
-import pickle
+import pickle           # Covert or dump binary
+import datetime         # Time stamp
+import sys, getopt          # Accepting arguments in cli
 
 __autor__ = 'Puriwat Khantiviriya'
 
 class Client:
     
+    # request queue for socket connection
+    req_queue = []
     # Service addr and port
-    serv_addr = '10.162.230.11'
+    serv_addr = socket.gethostname()
     port = 7658
-    
+
     # command for running fio on client side
-    cmd = ['/usr/local/bin/fio', 
-        '--filename=/root/APTRL/deleteme',
-        '--direct=1', '--rw=write', '--bs=4k', 
-        '--size=100G', '--iodepth=16', '--name=write4k',
-        '--output-format=terse', '--status-interval=1']
-    
-    rtow = ['--rw=readwrite', 'rwmixread=1']
-    
-    
     out_col = ['terse_version_3', 'fio_version', 'jobname', 'groupid', 'error',
         'read_kb', 'read_bandwidth', 'read_iops', 'read_runtime_ms',
         'read_slat_min', 'read_slat_max', 'read_slat_mean', 'read_slat_dev', 
@@ -63,81 +62,128 @@ class Client:
         'disk_write_merges', 'disk_read_ticks', 'write_ticks', 
         'disk_queue_time', 'disk_util']
 
-    def __init__(self):
-        
-        pi_arr = []
-        
-        # self.soc = self.connectSocket(self.serv_addr, self.port)
-        soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        soc.bind((self.serv_addr, self.port))
+    def __init__(self, filesize):
+        self.pi_arr = []
+        self.prev_pi = []
+        self.filesize = filesize
+        self.srv = None
+        self.loop = None
+        self.result = None
+        self.proc = self.execute_process(filesize)
+        self.proc_iter = iter(self.proc.stdout.readline, "")
 
-        soc.listen(0)
-        # conn, addr = soc.accept()
-        # print(f'Connected with {addr}')
-        
-        proc = self.executeProcess()
-        for stdou in iter(proc.stdout.readline, ""):
-            try:
-                # if(conn.fileno()):
-                conn, addr = soc.accept()
-                print(f'Connected with {addr}')
-                # try:
-                data = conn.recv(1024)
-                print(data)
-                if(data == b'REQ_PI'):
-                    pi_arr = self.getPI(stdou, proc)
-                    print(pi_arr)
-                    conn.sendall(pickle.dumps(pi_arr))
-                conn.close()
-            except Exception as e:
-                print(f'{e} data not received')
-                
-            # except EOFError:
-            #     conn,addr = soc.accept()
-        # if self.timeout > 0 and time.time() - start_time >= self.timeout:
-        #     soc.close()
-        #     raise RuntimeError("Timeout exceeded (%ds)" % self.timeout)
-            
-        
-        
-        # with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        #     s.connect((HOST, PORT))
-        #     s.sendall(b'Hello, world')
-        #     data = s.recv(1024)
+    def set_srv(self, loop, srv, coro):
+        self.srv = srv
+        self.loop = loop
+        self.coro = coro
 
-        # print('Received', repr(data))
-        
-    def executeProcess(self):
-        return subprocess.Popen(self.cmd, stdout=subprocess.PIPE, universal_newlines=True)
+    @asyncio.coroutine
+    def handle_req(self, reader, writer):
+        self.req_queue.append((reader, writer))
+        print(f"Connected with {writer.get_extra_info('peername')}")
+        # self.checkQueue(self.proc_iter)
+        try:
+            out_line = next(self.proc_iter)
+            self.pi_arr = self.get_pi(out_line)
+            if(self.pi_arr == None):
+                    self.pi_arr = self.prev_pi
+            self.store_perf()
+            self.prev_pi = self.pi_arr
+
+            # Get connection from queue and check the message
+            reader, writer = self.req_queue.pop(0)
+            data = yield from reader.read(1024)
+            msg = data.decode()
+            print(msg)
+            if(msg == 'REQ_PI'):
+                # retrieve PI from cmd
+                print(f"Sending: {self.pi_arr}")
+                writer.write(pickle.dumps(self.pi_arr[1:]))
+                yield from writer.drain()
+
+                writer.close()
+            else:
+                # Do nothing
+                writer.close()
+        except StopIteration:
+            print(f'process is done.')
+            self.coro.close()
+            self.srv.close()
+            self.loop.run_until_complete(srv.wait_closed())
+        except Exception as e:
+            print(f'Error occured: {e}')
+
+    def execute_process(self, size):
+        cmd = ['fio','/root/client/syn_workload_profile.fio',
+                '--filename=/root/client/mountfs/deleteme3',f'--size={size}',
+                '--output-format=terse', '--status-interval=1']
+        return subprocess.Popen(cmd, stdout=subprocess.PIPE, universal_newlines=True)
     
-    def getPI(self, line, proc):
-        # if(proc.poll() == None):
+    def get_pi(self, line):
         pi_data = line.split(';')
-        pi_arr = []
-        
-        print(line)
-        
-        pi_arr.append(pi_data[self.out_col.index('read_kb')])
-        pi_arr.append(pi_data[self.out_col.index('write_kb')])
-        pi_arr.append(pi_data[self.out_col.index('read_lat_mean')])
-        pi_arr.append(pi_data[self.out_col.index('write_lat_mean')])
-            
-        return pi_arr
-        # else:
-        #     return None
-            # raise Exception("Process is finished")          
+        if(len(pi_data) >= 121):
+            pi_arr = []
 
+            pi_arr.append(pi_data[self.out_col.index('jobname')])
         
-    # def connectSocket(self, serv_addr, port):
-    #     # logger.debug("waiting to connect with client")
+            pi_arr.append(pi_data[self.out_col.index('read_bandwidth')])
+            pi_arr.append(pi_data[self.out_col.index('write_bandwidth')])
+            pi_arr.append(pi_data[self.out_col.index('read_lat_mean')])
+            pi_arr.append(pi_data[self.out_col.index('write_lat_mean')])
+            
+            return pi_arr
+        else:
+            return None
         
-    #     # soc = socket.create_connection((serv_addr,port), 30)
-    #     # soc.connect((serv_addr, port))
-    #     return soc
-        
-    def send(self,pi_data):
-        self.soc.sendall(pickle.dumps(pi_data))
-        data = self.soc.recv(1024)
-        print('Received', repr(data))
-        
-Client()
+    def store_perf(self):
+        print(len(self.pi_arr))
+        if(len(self.pi_arr) != 0):
+            filename=self.pi_arr[0]+f'_{self.filesize}'+'.txt'
+            now = datetime.datetime.now()
+            with open(filename, 'a') as outf:
+                outf.write(f'{now},{self.pi_arr[1]},{self.pi_arr[2]},{self.pi_arr[3]},{self.pi_arr[4]}\n')
+
+
+size = 0
+argv = sys.argv[1:]
+try:
+    opts, args = getopt.getopt(argv, "hs:", ["size="])
+except getopt.GetoptError:
+    print('''
+        Client.py -s <filesize>, ... [K,M,G,T,P,Ki,Mi,Gi,Ti,Pi]
+        Example:
+            Client.py -s 1G
+            Client.py -s 1G,2M,3K
+    ''')
+    sys.exit(2)
+
+for opt, arg in opts:
+    if opt in ("-h", "--help"):
+        print('''
+            Client.py -s <filesize>, ... [K,M,G,T,P,Ki,Mi,Gi,Ti,Pi]
+            Example:
+                Client.py -s 1G
+                Client.py -s 1G,2M,3K
+        ''')
+    elif opt in ("-s", "--size"):
+        sizes = arg.split(',')
+        for size in sizes:
+
+            client = Client(size)
+
+            loop = asyncio.get_event_loop()
+            coro = asyncio.start_server(client.handle_req, client.serv_addr, 
+                client.port, loop=loop)
+            srv = loop.run_until_complete(coro)
+            client.set_srv(loop, srv, coro)
+            print(f'Open connection on {srv.sockets[0].getsockname()}')
+            try:
+                loop.run_forever()
+            except KeyboardInterrupt:
+                pass
+                
+            srv.close()
+            loop.run_until_complete(srv.wait_closed())
+            loop.close()
+
+    

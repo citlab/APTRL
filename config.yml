@@ -19,16 +19,15 @@ node:
     - node3
 
   server_id :
-    master: 1
+    - master: loewe.arch.suse.de
+        port: 2789
+#   - node1: loewe.arch.suse.de
+        
 
   client_addr:
     node1: loewe.arch.suse.de:7657
     node2: loewe.arch.suse.de:7658
     node3: loewe.arch.suse.de:7659 
-    # master: master.octopus.test:7865
-    # node1: node1.octopus.test:7865
-    # node2: node2.octopus.test:7865  
-    # node3: node3.octopus.test:7865
 
   client_id:
     node1: 0
@@ -63,14 +62,11 @@ ceph-param:
       default: 0
 
 opt:
-  # Dashboard config
-  dashboard_addr : loewe.arch.suse.de
-  dashboard_port : 8443
+
   auth: 
     username : admin
     passwd : admin
 
-  heartbeat : 1
   # ML config section
   disable_same_thread_check: False
   delay_between-actions: 1
@@ -79,20 +75,18 @@ opt:
   enable_tuning: True
   disable_training: False
   observation_size: 12
+
   # Must change number when reduce or increase size of params
   num_actions: 17
   random_action_probability: 0.05
   minibatch_size: 1
-  ticks_per_observation: 1
   tick_len: 1
-  # number of clients * number of parameters
-  tick_data_size: 12
+  stepsize_change: 4
+  k_val: 2
+
+  # replay database
+  heartbeat : 1
   missing_entry_tolerance: 10
   checkpoint_time: 1800
   obd_per_client_ma: 1
   pi_per_client_obd: 4
-
-  # Step size param
-  stepsize_change: 4
-  # K largest output value !must not exceed the number of parameter
-  k_val: 2
