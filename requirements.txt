@@ -1,3 +1,10 @@
 requests
 json
 pyyaml
+tensorflow
+sqlite3
+pickle
+numpy
+paramiko
+asyncio
+nest_asyncio
