@@ -11,8 +11,9 @@ import socket
 import subprocess           # Running command
 import json
 import pickle           # Covert or dump binary
-import datetime         # Time stamp
+import datetime, time         # Time stamp
 import sys, getopt          # Accepting arguments in cli
+import os
 
 __autor__ = 'Puriwat Khantiviriya'
 
@@ -69,6 +70,7 @@ class Client:
         self.srv = None
         self.loop = None
         self.result = None
+        self.start_time = time.time()
         self.proc = self.execute_process(filesize)
         self.proc_iter = iter(self.proc.stdout.readline, "")
 
@@ -106,16 +108,21 @@ class Client:
                 # Do nothing
                 writer.close()
         except StopIteration:
+            print(f'Run time: {time.time() - self.start_time}')
             print(f'process is done.')
-            self.coro.close()
-            self.srv.close()
-            self.loop.run_until_complete(srv.wait_closed())
+            # self.coro.close()
+            # self.srv.close()
+            # self.loop.run_until_complete(srv.wait_closed())
+            # Delete file first
+            if os.path.exists("mountfs/deleteme1"):
+                os.remove("mountfs/deleteme1")
+            sys.exit(1)
         except Exception as e:
             print(f'Error occured: {e}')
 
     def execute_process(self, size):
         cmd = ['fio','/root/client/syn_workload_profile.fio',
-                '--filename=/root/client/mountfs/deleteme3',f'--size={size}',
+                '--filename=/root/client/mountfs/deleteme1',f'--size={size}',
                 '--output-format=terse', '--status-interval=1']
         return subprocess.Popen(cmd, stdout=subprocess.PIPE, universal_newlines=True)
     
@@ -143,47 +150,39 @@ class Client:
             with open(filename, 'a') as outf:
                 outf.write(f'{now},{self.pi_arr[1]},{self.pi_arr[2]},{self.pi_arr[3]},{self.pi_arr[4]}\n')
 
-
 size = 0
 argv = sys.argv[1:]
 try:
     opts, args = getopt.getopt(argv, "hs:", ["size="])
 except getopt.GetoptError:
     print('''
-        Client.py -s <filesize>, ... [K,M,G,T,P,Ki,Mi,Gi,Ti,Pi]
+        Client.py -s <filesize> [K,M,G,T,P,Ki,Mi,Gi,Ti,Pi]
         Example:
             Client.py -s 1G
-            Client.py -s 1G,2M,3K
     ''')
     sys.exit(2)
 
 for opt, arg in opts:
     if opt in ("-h", "--help"):
         print('''
-            Client.py -s <filesize>, ... [K,M,G,T,P,Ki,Mi,Gi,Ti,Pi]
+            Client.py -s <filesize> [K,M,G,T,P,Ki,Mi,Gi,Ti,Pi]
             Example:
                 Client.py -s 1G
-                Client.py -s 1G,2M,3K
         ''')
     elif opt in ("-s", "--size"):
-        sizes = arg.split(',')
-        for size in sizes:
+        client = Client(arg)
 
-            client = Client(size)
-
-            loop = asyncio.get_event_loop()
-            coro = asyncio.start_server(client.handle_req, client.serv_addr, 
-                client.port, loop=loop)
-            srv = loop.run_until_complete(coro)
-            client.set_srv(loop, srv, coro)
-            print(f'Open connection on {srv.sockets[0].getsockname()}')
-            try:
-                loop.run_forever()
-            except KeyboardInterrupt:
-                pass
-                
-            srv.close()
-            loop.run_until_complete(srv.wait_closed())
-            loop.close()
-
-    
+        loop = asyncio.get_event_loop()
+        coro = asyncio.start_server(client.handle_req, client.serv_addr, 
+            client.port, loop=loop)
+        srv = loop.run_until_complete(coro)
+        client.set_srv(loop, srv, coro)
+        print(f'Open connection on {srv.sockets[0].getsockname()}')
+        try:
+            loop.run_forever()
+        except KeyboardInterrupt:
+            pass
+            
+        srv.close()
+        loop.run_until_complete(srv.wait_closed())
+        loop.close()

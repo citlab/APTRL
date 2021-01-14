@@ -1,15 +1,14 @@
 # Log configuration
 log:
-  dqldaemon_debugging_level: 1
+  mldaemon_debugging_level: 1
   log_location: /home/pkhantiviriya/myAPTRL/log/
-  DQLDaemon.DQLDaemon_logfile: /home/pkhantiviriya/myAPTRL/log/dql_log.log
   ControllerIntf.ControllerInft_logfile: /home/pkhantiviriya/myAPTRL/log/controller_log.log
   MLDaemon.MLDaemon_logfile: /home/pkhantiviriya/myAPTRL/log/ml_log.log
-
+ 
 # Replay database configuration
 replaydb:
   dbfile: /home/pkhantiviriya/myAPTRL/replaydb.sqlite
-
+ 
 # Client&Server nodes
 node:
   node_name : 
@@ -17,23 +16,22 @@ node:
     - node1
     - node2
     - node3
-
-  server_id :
-    - master: loewe.arch.suse.de
-        port: 2789
-#   - node1: loewe.arch.suse.de
+ 
+  server_addr :
+    master: loewe.arch.suse.de:2789
+#   node1: loewe.arch.suse.de
         
-
+ 
   client_addr:
     node1: loewe.arch.suse.de:7657
     node2: loewe.arch.suse.de:7658
     node3: loewe.arch.suse.de:7659 
-
+ 
   client_id:
-    node1: 0
-    node2: 1
-    node3: 2
-
+    loewe.arch.suse.de:7657: 0
+    loewe.arch.suse.de:7658: 1
+    loewe.arch.suse.de:7659: 2
+ 
 # Parameter for tuning in Ceph cluster
 ceph-param: 
   - osd_memory_target:
@@ -60,13 +58,13 @@ ceph-param:
       max: 134217728000
       step: 16
       default: 0
-
+ 
 opt:
-
-  auth: 
-    username : admin
-    passwd : admin
-
+ 
+  srv_usr: root
+  # Controller interface 
+  ping_miss: 5
+ 
   # ML config section
   disable_same_thread_check: False
   delay_between-actions: 1
@@ -74,19 +72,27 @@ opt:
   start_random_rate: 0.5
   enable_tuning: True
   disable_training: False
-  observation_size: 12
-
+ 
   # Must change number when reduce or increase size of params
-  num_actions: 17
+  num_actions: 25
   random_action_probability: 0.05
-  minibatch_size: 1
-  tick_len: 1
+  minibatch_size: 36
   stepsize_change: 4
   k_val: 2
-
+ 
   # replay database
   heartbeat : 1
+  ticks_per_observation: 3
   missing_entry_tolerance: 10
   checkpoint_time: 1800
   obd_per_client_ma: 1
   pi_per_client_obd: 4
+ 
+  max_bandwidth: 12000
+  min_bandwidth: 0
+  min_latency: 27293199
+  max_latency: 1000000
+ 
+ 
+  
+

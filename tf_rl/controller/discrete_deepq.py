@@ -1,33 +1,33 @@
 """ASCAR Discreet Deep Q Controller.
-
+ 
 The following code are based on https://github.com/nivwusquorum/tensorflow-deepq under
 the following license:
-
+ 
 The MIT License (MIT)
-
+ 
 Copyright (c) 2015 Szymon Sidor
-
+ 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this
 software and associated documentation files (the "Software"), to deal in the Software
 without restriction, including without limitation the rights to use, copy, modify,
 merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
 permit persons to whom the Software is furnished to do so, subject to the following
 conditions:
-
+ 
 The above copyright notice and this permission notice shall be included in all copies
 or substantial portions of the Software.
-
+ 
 Modified by Yan Li <yanli@tuneup.ai>, Kenneth Chang <kchang44@ucsc.edu>,
 Oceane Bel <obel@ucsc.edu>. Storage Systems Research Center, Baskin School
 of Engineering. The new code is under the following license:
-
+ 
 Copyright (c) 2016, 2017 The Regents of the University of California. All
 rights reserved.
-
+ 
 Created by Yan Li <yanli@tuneup.ai>, Kenneth Chang <kchang44@ucsc.edu>,
 Oceane Bel <obel@ucsc.edu>. Storage Systems Research Center, Baskin School
 of Engineering.
-
+ 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
     * Redistributions of source code must retain the above copyright
@@ -39,7 +39,7 @@ modification, are permitted provided that the following conditions are met:
       University of California, nor the names of its contributors
       may be used to endorse or promote products derived from this
       software without specific prior written permission.
-
+ 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
@@ -53,8 +53,8 @@ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 OF THE POSSIBILITY OF SUCH DAMAGE.
 """
-
-
+ 
+ 
 from ascar_logging import logger
 import numpy as np
 import random
@@ -63,8 +63,8 @@ import os
 import pickle
 import time
 #from APTRL.ascar_logging import logger
-
-
+ 
+ 
 class DiscreteDeepQ(object):
     def __init__(self, observation_shape,
                     num_actions,
@@ -80,10 +80,10 @@ class DiscreteDeepQ(object):
                     summary_writer=None,
                     k_action=1):
         """Initialized the Deepq object.
-
+ 
         Based on:
             https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf
-
+ 
         Parameters
         -------
         observation_shape : int
@@ -155,37 +155,37 @@ class DiscreteDeepQ(object):
         # memorize arguments
         self.observation_shape         = observation_shape
         self.num_actions               = num_actions
-
+ 
         self.start_random_rate         = start_random_rate      # Beginning random rate
-
+ 
         self.q_network                 = observation_to_actions # MLP
         self.optimizer                 = optimizer
         self.s                         = session
-
+ 
         self.random_action_probability = random_action_probability
         self.exploration_period        = exploration_period
         self.train_every_nth           = train_every_nth
         self.discount_rate             = tf.constant(discount_rate)
         self.target_network_update_rate = \
                 tf.constant(target_network_update_rate)
-
+ 
         # deepq state
         self.actions_executed_so_far = 0
-
+ 
         self.iteration = 0
         self.summary_writer = summary_writer
-
+ 
         self.number_of_times_train_called = 0
         
         self.k_action = k_action
-
+ 
         self.create_variables()
-
+ 
         self.s.run(tf.initialize_all_variables())
         self.s.run(self.target_network_update)
-
+ 
         self.saver = tf.train.Saver()
-
+ 
     @staticmethod
     def linear_annealing(n, total, p_initial, p_final):
         """Linear annealing between p_initial and p_final
@@ -194,14 +194,14 @@ class DiscreteDeepQ(object):
             return p_final
         else:
             return p_initial - (n * (p_initial - p_final)) / total
-
+ 
     def observation_batch_shape(self, batch_size):
         return tuple([batch_size] + list(self.observation_shape))
-
+ 
     def create_variables(self):
         # Create copy for MLP
         self.target_q_network    = self.q_network.copy(scope="target_network")
-
+ 
         # FOR REGULAR ACTION SCORE COMPUTATION
         with tf.name_scope("taking_action"):
             # Create placeholder for accepting array of float with size None, observation_shape
@@ -228,7 +228,7 @@ class DiscreteDeepQ(object):
             target_values                  = tf.reduce_max(self.next_action_scores, reduction_indices=[1,]) * self.next_observation_mask
             # future rewards according to q value function value of rewards will be reduce in time
             self.future_rewards            = self.rewards + self.discount_rate * target_values
-
+ 
         with tf.name_scope("q_value_precition"):
             # FOR PREDICTION ERROR
             # TODO: What is this?
@@ -251,7 +251,7 @@ class DiscreteDeepQ(object):
                 if grad is not None:
                     tf.summary.histogram(var.name + '/gradients', grad)
             self.train_op                   = self.optimizer.apply_gradients(gradients)
-
+ 
         # UPDATE TARGET NETWORK
         with tf.name_scope("target_network_update"):
             self.target_network_update = []
@@ -260,35 +260,28 @@ class DiscreteDeepQ(object):
                 update_op = v_target.assign_sub(self.target_network_update_rate * (v_target - v_source))
                 self.target_network_update.append(update_op)
             self.target_network_update = tf.group(*self.target_network_update)
-
+ 
         # summaries
         tf.summary.scalar("prediction_error", self.prediction_error)
-
+ 
         self.summarize = tf.summary.merge_all()
         # no operation
         self.no_op1    = tf.no_op()
-
+ 
     def action(self, observation) -> int:
         """Given observation returns the action that should be chosen using
         DeepQ learning strategy. Does not backprop."""
         assert observation.shape == self.observation_shape, \
                 "Action is performed based on single observation."
-
+ 
         self.actions_executed_so_far += 1
         exploration_p = self.linear_annealing(self.actions_executed_so_far,
                                             self.exploration_period,
                                             self.start_random_rate,
                                             self.random_action_probability)
-        
-        # logger.info(f'action_scores:{self.action_scores}')
+
         # Needs of exploration to prevent overfitting problem
-        if random.random() < exploration_p:
-            # rand_act = np.zeros(self.num_actions)
-            # for i in range(len(rand_act)):
-            #     # TODO: change random range to min and max of each parameter
-            #     rand_act[i] = random.randint(0, 20)
-            # rand_act = rand_act[np.newaxis,:]
-            
+        if random.random() < exploration_p: 
             # Random action with k size
             rand_act = random.sample(range(self.num_actions), self.k_action)
             
@@ -307,10 +300,7 @@ class DiscreteDeepQ(object):
             # here self.s.run returns numpy.int64
             act = self.s.run(self.predicted_actions, {self.observation: observation[np.newaxis,:]})[0]
             # Create list containing maximum output value 
-            # from each parameter including 0 (Do nothing)
-            # k_act = [act[0]]
-            # k_act.extend([max(act[i:i+4]) for i in range(1,self.num_actions,4)])
-            reshape_act = act[1:].reshape((4,4))
+            reshape_act = act[1:].reshape((6,self.num_actions//6))
             maxreshape_act = np.amax(reshape_act, axis=1)
             act_maxidx = np.argmax(reshape_act, axis=1)
             for i in range(0,act_maxidx.size):
@@ -327,12 +317,7 @@ class DiscreteDeepQ(object):
                     act_ids.append(idx_act[i])
             else:
                 act_ids.append(idx_act[0])
-            # sort_k_act = np.sort(np.array(k_act))[::-1][:k]
-            # argsort_k_act = np.argsort(np.array(act))[::-1][k]
-            # # get id of each action
-            # act_ids = []
-            # for act_val in sort_k_act:
-            #     act_ids.append(int(np.where(act == act_val)[0]))
+
             logger.info(f'act_ids: {act_ids}')
             if(act_ids[0] == [0]):
                 act_ids = [0]
@@ -340,27 +325,27 @@ class DiscreteDeepQ(object):
                 act_ids.remove(0)
             logger.info('Choose calculated action {0}'.format(act_ids))
             return act_ids
-
+ 
     def exploration_completed(self):
         return min(float(self.actions_executed_so_far) / self.exploration_period, 1.0)
-
+ 
     def training_step(self, samples) -> float:
         """Pick a self.minibatch_size experience from reply buffer
         and backpropage the value function.
-
+ 
         :return: prediction error
         """
         self.number_of_times_train_called += 1
-
+ 
         if self.number_of_times_train_called % self.train_every_nth == 0:
             # bach states
             states         = np.empty(self.observation_batch_shape(len(samples)))
             newstates      = np.empty(self.observation_batch_shape(len(samples)))
             action_mask    = np.zeros((len(samples),self.num_actions))     # TODO: maybe set this to 1D nparray
-
+ 
             newstates_mask = np.empty((len(samples),))
             rewards        = np.empty((len(samples),))
-
+ 
             for i, (state, action, reward, newstate, _) in enumerate(samples):
                 logger.info(f'samples: {state};{action};{reward};{newstate}')
                 states[i] = state
@@ -375,10 +360,10 @@ class DiscreteDeepQ(object):
                 else:
                     newstates[i] = 0
                     newstates_mask[i] = 0
-
+ 
             calculate_summaries = self.iteration % 100 == 0 and \
                     self.summary_writer is not None
-
+ 
             cost, _, summary_str = self.s.run([
                 self.prediction_error,
                 # apply gradient with observation, next observation, action, and reward
@@ -394,19 +379,19 @@ class DiscreteDeepQ(object):
             })
             
             self.s.run(self.target_network_update)
-
+ 
             if calculate_summaries:
                 self.summary_writer.add_summary(summary_str, self.iteration)
-
+ 
             self.iteration += 1
             return cost
         else:
             return None
-
+ 
     def save(self, save_dir):
         STATE_FILE = os.path.join(save_dir, 'deepq_state')
         MODEL_FILE = os.path.join(save_dir, 'model')
-
+ 
         # deepq state
         state = {
             'actions_executed_so_far':      self.actions_executed_so_far,
@@ -414,30 +399,32 @@ class DiscreteDeepQ(object):
             #'number_of_times_store_called': self.number_of_times_store_called,
             'number_of_times_train_called': self.number_of_times_train_called,
         }
-
+ 
         print('Saving model...')
-
+ 
         saving_started = time.time()
-
+ 
         self.saver.save(self.s, MODEL_FILE)
         with open(STATE_FILE, "wb") as f:
             pickle.dump(state, f)
-
+ 
         print('Model saved in {} s'.format(time.time() - saving_started))
-
+ 
     def restore(self, save_dir):
         # deepq state
         STATE_FILE      = os.path.join(save_dir, 'deepq_state')
         MODEL_FILE      = os.path.join(save_dir, 'model')
-
+ 
         with open(STATE_FILE, "rb") as f:
             state = pickle.load(f)
         self.saver.restore(self.s, MODEL_FILE)
-
+ 
         self.actions_executed_so_far      = state['actions_executed_so_far']
         self.iteration                    = state['iteration']
         #self.number_of_times_store_called = state['number_of_times_store_called']
         self.number_of_times_train_called = state['number_of_times_train_called']
-
-
+ 
+ 
+ 
+ 
 

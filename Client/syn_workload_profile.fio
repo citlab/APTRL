@@ -6,7 +6,7 @@
 fadvise_hint=0
 direct=1
 ioengine=libaio
-iodepth=16
+iodepth=32
 numjobs=1
 ramp_time=10
 

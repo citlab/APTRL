@@ -136,3 +136,5 @@ dmypy.json
 *.crt
 pass_token
 
+# Checkpoint folder
+checkpoint*/
